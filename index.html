@@ -1,0 +1,1342 @@
+<!DOCTYPE html>
+<html lang="mk">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SMILEVSKI PRODUCTION</title>
+    <meta name="description" content="Професионална фотографија и видео продукција - Smilevski Production">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&family=Unbounded:wght@400;700;800;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@3.2.2/dist/css/splide-core.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@3.2.2/dist/js/splide.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        heading: ['Unbounded', 'sans-serif'],
+                        body: ['Lora', 'serif'],
+                    },
+                    colors: {
+                        brand: {
+                            black: '#000000',
+                            white: '#FFFFFF',
+                            orange: '#FF7800',
+                            charcoal: '#36454F',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            font-size: 100%;
+        }
+
+        .font-heading {
+            font-weight: 900 !important;
+        }
+
+        body {
+            font-family: 'Lora', serif;
+            background: #000;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* ===== LOADER ===== */
+        #loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.6s ease;
+        }
+
+        #loader.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .loader-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .loader-logo {
+            width: 64px;
+            height: 64px;
+            opacity: 0.8;
+            border-radius: 50%;
+        }
+
+        .loader-text {
+            font-family: 'Unbounded', sans-serif;
+            font-weight: 900;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            opacity: 0.5;
+        }
+
+        .loader-bar-track {
+            width: 200px;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .loader-bar-fill {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, #FF7800, #FF9A40);
+            border-radius: 3px;
+            transition: width 0.1s ease;
+        }
+
+        .loader-percent {
+            font-family: 'Lora', serif;
+            font-size: 12px;
+            opacity: 0.4;
+        }
+
+        /* ===== NAVBAR ===== */
+        #navbar {
+            position: fixed;
+            top: 16px;
+            left: 16px;
+            right: 16px;
+            z-index: 100;
+            transition: all 0.4s ease-in-out;
+        }
+
+        .nav-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 24px;
+            max-width: 100%;
+            margin: 0 auto;
+            border-radius: 16px;
+            background: transparent;
+            border: 1px solid transparent;
+            transition: all 0.4s ease-in-out;
+        }
+
+        #navbar.scrolled .nav-inner {
+            max-width: 720px;
+            border-radius: 50px;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-logo {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .nav-links a {
+            font-family: 'Lora', serif;
+            font-size: 14px;
+            font-weight: 500;
+            opacity: 0.8;
+            transition: opacity 0.2s, color 0.2s;
+            text-decoration: none;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .nav-links a:hover {
+            opacity: 1;
+            color: #FF7800;
+        }
+
+        .nav-links a:focus {
+            outline: 2px solid #FF7800;
+            outline-offset: 4px;
+            border-radius: 4px;
+        }
+
+        .nav-hamburger {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            gap: 5px;
+            width: 28px;
+            height: 28px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 0;
+            z-index: 110;
+        }
+
+        .nav-hamburger span {
+            display: block;
+            width: 100%;
+            height: 2px;
+            background: #fff;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-hamburger.open span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .nav-hamburger.open span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .nav-hamburger.open span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
+
+        @media (max-width: 768px) {
+            #navbar {
+                position: fixed !important;
+                top: 16px !important;
+                left: 16px !important;
+                right: 16px !important;
+                z-index: 99999 !important;
+            }
+
+            .nav-inner {
+                background: transparent !important;
+                backdrop-filter: none !important;
+                -webkit-backdrop-filter: none !important;
+                border: none !important;
+                box-shadow: none !important;
+                border-radius: 0 !important;
+                max-width: 100% !important;
+            }
+
+            .nav-hamburger {
+                display: flex;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 32px;
+                background: rgba(0, 0, 0, 0.92);
+                backdrop-filter: blur(24px);
+                -webkit-backdrop-filter: blur(24px);
+                opacity: 0;
+                pointer-events: none;
+                transition: opacity 0.35s ease;
+                z-index: 105;
+            }
+
+            .nav-links.open {
+                opacity: 1;
+                pointer-events: auto;
+            }
+
+            .nav-links a {
+                font-size: 24px;
+                opacity: 0.9;
+            }
+
+        }
+
+        /* ===== SKIP LINK ===== */
+        .skip-link {
+            position: absolute;
+            top: -100px;
+            left: 16px;
+            background: #FF7800;
+            color: #000;
+            padding: 8px 16px;
+            border-radius: 4px;
+            z-index: 10000;
+            font-family: 'Lora', serif;
+            transition: top 0.2s;
+        }
+
+        .skip-link:focus {
+            top: 16px;
+        }
+
+        /* ===== STICKY HERO OVERLAY ===== */
+        .hero {
+            position: sticky;
+            top: 0;
+            z-index: 1;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            background: #000;
+        }
+
+        .hero>section:last-child {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .hero>section {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ===== COMET CIRCLES BACKGROUND ===== */
+        .circle-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 900px;
+            max-width: 100%;
+            aspect-ratio: 1;
+            perspective: 1500px;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .circle-wrapper {
+            position: absolute;
+            transform-style: preserve-3d;
+            pointer-events: none;
+        }
+
+        .circle1 {
+            transform: rotateX(60deg) rotateY(20deg) rotateZ(5deg);
+            top: 0;
+            left: -15%;
+            width: 75%;
+            height: 75%;
+        }
+
+        .circle2 {
+            transform: rotateX(-60deg) rotateY(20deg) rotateZ(5deg);
+            top: -10%;
+            left: 25%;
+            width: 100%;
+            height: 100%;
+        }
+
+        .circle3 {
+            transform: rotateX(60deg) rotateY(-20deg) rotateZ(5deg);
+            top: 20%;
+            left: -5%;
+            width: 80%;
+            height: 80%;
+        }
+
+        .circle4 {
+            transform: rotateX(-60deg) rotateY(-20deg) rotateZ(5deg);
+            top: 15%;
+            left: 20%;
+            width: 100%;
+            height: 100%;
+        }
+
+        .content-overlay {
+            position: relative;
+            background: #000;
+        }
+
+        .sticky-section {
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background: #000;
+            box-shadow: 0 -20px 50px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+        }
+
+
+        /* ===== SCROLL ANIMATION ===== */
+        .scroll-animation {
+            position: relative;
+            height: 800vh;
+        }
+
+        .scroll-canvas-wrap {
+            position: sticky;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        #scroll-canvas {
+            border-radius: 16px;
+            max-width: calc(100% - 32px);
+            max-height: calc(100vh - 80px);
+            /* Crop PixVerse watermark */
+            transform: scale(1.05);
+            clip-path: inset(0 round 16px);
+        }
+
+        @media (max-width: 768px) {
+            .scroll-animation {
+                height: 600vh;
+            }
+        }
+
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .scroll-animation {
+                height: 700vh;
+            }
+        }
+
+        /* ===== SCROLL PROGRESS BAR ===== */
+        #scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #FF7800, #FF9A40);
+            z-index: 101;
+            width: 0%;
+            transition: width 0.05s linear;
+        }
+
+
+
+        /* ===== GALLERY SKELETON CARDS ===== */
+        .skeleton-card {
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            aspect-ratio: 4/3;
+            background: rgba(255, 255, 255, 0.02);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .skeleton-card::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 32px;
+            height: 32px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 50%;
+        }
+
+        .skeleton-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(110deg, transparent 30%, rgba(255, 120, 0, 0.06) 50%, transparent 70%);
+            animation: shimmer 3s ease-in-out infinite;
+        }
+
+        .skeleton-card:hover {
+            border-color: #FF7800;
+            transform: translateY(-4px);
+            box-shadow: 0 8px 32px rgba(255, 120, 0, 0.15);
+            background: rgba(255, 120, 0, 0.03);
+        }
+
+        .skeleton-card:focus-visible {
+            outline: 2px solid #FF7800;
+            outline-offset: 2px;
+        }
+
+        @keyframes shimmer {
+            0% {
+                transform: translateX(-100%);
+            }
+
+            100% {
+                transform: translateX(100%);
+            }
+        }
+
+        /* ===== SPLIDE CAROUSEL CARDS ===== */
+        .carousel-card {
+            aspect-ratio: 5 / 7;
+            border-radius: 0.8rem;
+            overflow: hidden;
+            position: relative;
+            cursor: grab;
+            background: #fff;
+            border: 2px solid #b8b8b8;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .carousel-card:active {
+            cursor: grabbing;
+        }
+
+        .carousel-card:hover {
+            border-color: #FF7800;
+            box-shadow: 0 4px 20px rgba(255, 120, 0, 0.15);
+        }
+
+        .carousel-card__image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 1;
+            background: transparent;
+        }
+
+        .carousel-card__image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .carousel-card__overlay {
+            position: absolute;
+            inset: 0;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 1.2rem;
+            pointer-events: none;
+        }
+
+        .carousel-card__top,
+        .carousel-card__bottom {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .carousel-card__label,
+        .carousel-card__title {
+            font-family: 'Unbounded', sans-serif;
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #222;
+            font-weight: 700;
+        }
+
+        .carousel-card__tag {
+            font-family: 'Unbounded', sans-serif;
+            font-size: 0.62rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #222;
+            border: 1.5px solid #222;
+            border-radius: 50px;
+            padding: 0.2em 0.7em;
+            background: transparent;
+            font-weight: 600;
+        }
+
+        .carousel-card__arrow {
+            width: 1.2rem;
+            height: 1.2rem;
+            color: #222;
+        }
+
+        .splide__track {
+            overflow: visible !important;
+        }
+
+        .carousel-container {
+            overflow: hidden;
+        }
+
+        /* ===== SECTION DIVIDER ===== */
+        .section-accent {
+            width: 50px;
+            height: 2px;
+            background: #FF7800;
+            margin: 0 auto 40px;
+        }
+
+        /* ===== SECTION FADE-IN ===== */
+        .fade-section {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+
+        .fade-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ===== CTA VIDEO BACKGROUND ===== */
+        .cta-bg-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+        }
+        #cta .max-w-2xl {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ===== CTA BUTTON ===== */
+        .cta-btn {
+            display: inline-block;
+            background: #FF7800;
+            color: #fff;
+            padding: 18px 48px;
+            border-radius: 50px;
+            font-family: 'Unbounded', sans-serif;
+            font-weight: 900;
+            font-size: 20px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            min-width: 44px;
+            min-height: 44px;
+        }
+
+        .cta-btn:hover {
+            background: #e06c00;
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(255, 120, 0, 0.3);
+        }
+
+        /* ===== LENIS SMOOTH SCROLL ===== */
+        .lenis.lenis-stopped {
+            overflow: hidden;
+        }
+
+        .cta-btn:focus {
+            outline: 2px solid #FF7800;
+            outline-offset: 4px;
+            border-radius: 50px;
+        }
+
+        /* ===== REDUCED MOTION ===== */
+        @media (prefers-reduced-motion: reduce) {
+
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+
+            .skeleton-card::after {
+                animation: none;
+            }
+
+        }
+
+        /* ===== CUSTOM SCROLLBAR ===== */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #000;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, #FF7800, #36454F);
+            border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #FF7800;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Skip Link -->
+    <a href="#main-content" class="skip-link">Прескокни до содржина</a>
+
+    <!-- Scroll Progress Bar -->
+    <div id="scroll-progress"></div>
+
+    <!-- Loader -->
+    <div id="loader" role="status" aria-live="polite" aria-label="Вчитување содржина">
+        <div class="loader-content">
+            <img src="logo.png" alt="" class="loader-logo" aria-hidden="true">
+            <p class="loader-text">Вчитување</p>
+            <div class="loader-bar-track">
+                <div class="loader-bar-fill" id="loader-fill"></div>
+            </div>
+            <p class="loader-percent" id="loader-percent" aria-live="polite">0%</p>
+        </div>
+    </div>
+
+    <!-- Intro Wipe Panels -->
+    <div id="intro-wipe" style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:9998;pointer-events:none;">
+        <div class="wipe-panel"
+            style="position:absolute;top:0;left:0;width:100%;height:100%;background:#0A0A0A;z-index:1;"></div>
+        <div class="wipe-panel"
+            style="position:absolute;top:0;left:0;width:100%;height:100%;background:#1A1A1A;z-index:2;"></div>
+        <div class="wipe-panel"
+            style="position:absolute;top:0;left:0;width:100%;height:100%;background:#333333;z-index:3;"></div>
+    </div>
+
+    <!-- Navbar -->
+    <nav id="navbar" role="navigation" aria-label="Главна навигација">
+        <div class="nav-inner">
+            <a href="/" class="flex items-center gap-2">
+                <img src="logo.png" alt="Smilevski Production лого" class="nav-logo">
+            </a>
+            <button class="nav-hamburger" id="navHamburger" aria-label="Мени">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <div class="nav-links" id="navLinks">
+                <a href="#cta">Резервации</a>
+            </div>
+        </div>
+    </nav>
+
+    <main id="main-content">
+
+        <!-- ===== STICKY HERO ===== -->
+        <header class="hero">
+
+            <!-- ===== COMET CIRCLES BACKGROUND ===== -->
+            <div class="circle-container" aria-hidden="true">
+                <!-- Circle 1 - Teal -->
+                <div class="circle-wrapper circle1">
+                    <svg viewBox="0 0 600 600" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision">
+                        <defs>
+                            <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" stop-color="rgb(45 212 191)" stop-opacity="1" />
+                                <stop offset="100%" stop-color="rgb(17 94 89)" stop-opacity="0.1" />
+                            </linearGradient>
+                        </defs>
+                        <circle cx="300" cy="300" r="250" fill="none" stroke="url(#grad1)" stroke-width="1.5"
+                                stroke-dasharray="520 1050" stroke-dashoffset="20">
+                            <animate attributeName="stroke-dashoffset" from="20" to="1590" dur="3s" repeatCount="indefinite" />
+                        </circle>
+                    </svg>
+                </div>
+
+                <!-- Circle 2 - Orange -->
+                <div class="circle-wrapper circle2">
+                    <svg viewBox="0 0 800 800" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision">
+                        <defs>
+                            <linearGradient id="grad2" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="-20%" stop-color="rgb(251 146 60)" stop-opacity="0.05" />
+                                <stop offset="80%" stop-color="rgb(249 115 22)" stop-opacity="1" />
+                            </linearGradient>
+                        </defs>
+                        <circle cx="400" cy="400" r="300" fill="none" stroke="url(#grad2)" stroke-width="1.5"
+                                stroke-dasharray="900 985" stroke-dashoffset="0">
+                            <animate attributeName="stroke-dashoffset" from="0" to="-1885" dur="3s" repeatCount="indefinite" />
+                        </circle>
+                    </svg>
+                </div>
+
+                <!-- Circle 3 - Rose -->
+                <div class="circle-wrapper circle3">
+                    <svg viewBox="0 0 600 600" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision">
+                        <defs>
+                            <linearGradient id="grad3" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" stop-color="rgb(251 113 133)" stop-opacity="1" />
+                                <stop offset="100%" stop-color="rgb(225 29 72)" stop-opacity="0.1" />
+                            </linearGradient>
+                        </defs>
+                        <circle cx="300" cy="300" r="150" fill="none" stroke="url(#grad3)" stroke-width="1.5"
+                                stroke-dasharray="400 542" stroke-dashoffset="60">
+                            <animate attributeName="stroke-dashoffset" from="60" to="1002" dur="3s" repeatCount="indefinite" />
+                        </circle>
+                    </svg>
+                </div>
+
+                <!-- Circle 4 - Amber -->
+                <div class="circle-wrapper circle4">
+                    <svg viewBox="0 0 800 800" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision">
+                        <defs>
+                            <linearGradient id="grad4" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="-20%" stop-color="rgb(252 211 77)" stop-opacity="0.05" />
+                                <stop offset="80%" stop-color="rgb(251 191 36)" stop-opacity="1" />
+                            </linearGradient>
+                        </defs>
+                        <circle cx="400" cy="400" r="200" fill="none" stroke="url(#grad4)" stroke-width="1.5"
+                                stroke-dasharray="500 756" stroke-dashoffset="300">
+                            <animate attributeName="stroke-dashoffset" from="300" to="-956" dur="2s" repeatCount="indefinite" />
+                        </circle>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- ===== HERO TOP 1/3 — Floating Cameras ===== -->
+            <section class="relative overflow-hidden" style="height: 33.33vh; flex-shrink: 0; background: transparent;">
+                <!-- SVG Downward Curve -->
+                <svg class="absolute bottom-0 left-0 w-full" viewBox="0 0 1440 120" preserveAspectRatio="none"
+                    style="height: 60px;">
+                    <path d="M0,0 Q720,150 1440,0 L1440,120 L0,120 Z" fill="transparent" opacity="0.99" />
+                </svg>
+            </section>
+
+            <!-- ===== HERO BOTTOM — Title + Video Canvas ===== -->
+            <section class="relative py-8 md:py-12 px-4 text-center" style="background: transparent;">
+                <h1 class="font-heading text-white mb-2"
+                    style="font-size: clamp(42px, 10vw, 100px); letter-spacing: 6px; line-height: 1.1;">
+                    SMILEVSKI
+                </h1>
+                <h2 class="font-heading text-white mb-8 md:mb-12"
+                    style="font-size: clamp(28px, 6vw, 60px); letter-spacing: 10px; line-height: 1.1;">
+                    PRODUCTION
+                </h2>
+                <p class="font-body text-sm opacity-40 mb-6" style="letter-spacing: 2px;">Скролај за да истражиш</p>
+            </section>
+
+        </header><!-- end sticky hero -->
+
+        <!-- ===== SCROLL-DRIVEN VIDEO ANIMATION ===== -->
+        <section class="scroll-animation content-overlay" id="scroll-video" style="z-index: 10;">
+            <div class="scroll-canvas-wrap">
+                <canvas id="scroll-canvas" role="img"
+                    aria-label="Анимација на камера контролирана со скролање"></canvas>
+
+
+            </div>
+        </section>
+
+        <!-- Wrapper for zoomed out transition -->
+        <div id="rest-of-site" style="margin-top: -100vh; position: relative; z-index: 5;">
+
+        <!-- ===== CATEGORY: СПОРТ ===== -->
+        <section id="sport" class="sticky-section py-20 md:py-28 px-4 md:px-8" style="z-index: 3;">
+            <div class="max-w-6xl mx-auto w-full">
+                <h3 class="font-heading text-center mb-4"
+                    style="font-size: clamp(32px, 5vw, 56px); letter-spacing: 4px;">
+                    Спорт
+                </h3>
+                <div class="section-accent"></div>
+                <div class="carousel-container">
+                    <div id="splide-sport" class="splide" aria-label="Спорт галерија">
+                        <div class="splide__track">
+                            <ul class="splide__list">
+                                <li class="splide__slide"><div class="carousel-card" tabindex="0"><div class="carousel-card__image"><img src="sport/sport-1.jpg" alt="Спорт фотографија 1"></div><div class="carousel-card__overlay"><div class="carousel-card__top"><span class="carousel-card__label">Спорт</span><span class="carousel-card__tag">01</span></div><div class="carousel-card__bottom"><span class="carousel-card__title">Фотографија</span><svg class="carousel-card__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></div></div></div></li>
+                                <li class="splide__slide"><div class="carousel-card" tabindex="0"><div class="carousel-card__image"><img src="sport/sport-2.jpg" alt="Спорт фотографија 2"></div><div class="carousel-card__overlay"><div class="carousel-card__top"><span class="carousel-card__label">Спорт</span><span class="carousel-card__tag">02</span></div><div class="carousel-card__bottom"><span class="carousel-card__title">Фотографија</span><svg class="carousel-card__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></div></div></div></li>
+                                <li class="splide__slide"><div class="carousel-card" tabindex="0"><div class="carousel-card__image"><img src="sport/sport-3.jpg" alt="Спорт фотографија 3"></div><div class="carousel-card__overlay"><div class="carousel-card__top"><span class="carousel-card__label">Спорт</span><span class="carousel-card__tag">03</span></div><div class="carousel-card__bottom"><span class="carousel-card__title">Фотографија</span><svg class="carousel-card__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></div></div></div></li>
+                                <li class="splide__slide"><div class="carousel-card" tabindex="0"><div class="carousel-card__image"><img src="sport/sport-4.jpg" alt="Спорт фотографија 4"></div><div class="carousel-card__overlay"><div class="carousel-card__top"><span class="carousel-card__label">Спорт</span><span class="carousel-card__tag">04</span></div><div class="carousel-card__bottom"><span class="carousel-card__title">Фотографија</span><svg class="carousel-card__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></div></div></div></li>
+                                <li class="splide__slide"><div class="carousel-card" tabindex="0"><div class="carousel-card__image"><img src="sport/sport-5.jpg" alt="Спорт фотографија 5"></div><div class="carousel-card__overlay"><div class="carousel-card__top"><span class="carousel-card__label">Спорт</span><span class="carousel-card__tag">05</span></div><div class="carousel-card__bottom"><span class="carousel-card__title">Фотографија</span><svg class="carousel-card__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></div></div></div></li>
+                                <li class="splide__slide"><div class="carousel-card" tabindex="0"><div class="carousel-card__image"><img src="sport/sport-6.jpg" alt="Спорт фотографија 6"></div><div class="carousel-card__overlay"><div class="carousel-card__top"><span class="carousel-card__label">Спорт</span><span class="carousel-card__tag">06</span></div><div class="carousel-card__bottom"><span class="carousel-card__title">Фотографија</span><svg class="carousel-card__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></div></div></div></li>
+                                <li class="splide__slide"><div class="carousel-card" tabindex="0"><div class="carousel-card__image"><img src="sport/sport-7.jpg" alt="Спорт фотографија 7"></div><div class="carousel-card__overlay"><div class="carousel-card__top"><span class="carousel-card__label">Спорт</span><span class="carousel-card__tag">07</span></div><div class="carousel-card__bottom"><span class="carousel-card__title">Фотографија</span><svg class="carousel-card__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></div></div></div></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== CATEGORY: НАСТАНИ ===== -->
+        <section id="events" class="sticky-section py-20 md:py-28 px-4 md:px-8" style="z-index: 4;">
+            <div class="fade-section max-w-6xl mx-auto w-full">
+                <h3 class="font-heading text-center mb-4"
+                    style="font-size: clamp(32px, 5vw, 56px); letter-spacing: 4px;">
+                    Настани
+                </h3>
+                <div class="section-accent"></div>
+                <div class="carousel-container">
+                    <div id="splide-events" class="splide" aria-label="Настани галерија">
+                        <div class="splide__track">
+                            <ul class="splide__list">
+                                <li class="splide__slide"><div class="carousel-card" tabindex="0"><div class="carousel-card__image"><img src="nastani/nastani-1.jpg" alt="Настани фотографија 1"></div><div class="carousel-card__overlay"><div class="carousel-card__top"><span class="carousel-card__label">Настани</span><span class="carousel-card__tag">01</span></div><div class="carousel-card__bottom"><span class="carousel-card__title">Фотографија</span><svg class="carousel-card__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></div></div></div></li>
+                                <li class="splide__slide"><div class="carousel-card" tabindex="0"><div class="carousel-card__image"><img src="nastani/nastani-2.jpg" alt="Настани фотографија 2"></div><div class="carousel-card__overlay"><div class="carousel-card__top"><span class="carousel-card__label">Настани</span><span class="carousel-card__tag">02</span></div><div class="carousel-card__bottom"><span class="carousel-card__title">Фотографија</span><svg class="carousel-card__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></div></div></div></li>
+                                <li class="splide__slide"><div class="carousel-card" tabindex="0"><div class="carousel-card__image"><img src="nastani/nastani-3.jpg" alt="Настани фотографија 3"></div><div class="carousel-card__overlay"><div class="carousel-card__top"><span class="carousel-card__label">Настани</span><span class="carousel-card__tag">03</span></div><div class="carousel-card__bottom"><span class="carousel-card__title">Фотографија</span><svg class="carousel-card__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></div></div></div></li>
+                                <li class="splide__slide"><div class="carousel-card" tabindex="0"><div class="carousel-card__image"><img src="nastani/nastani-4.jpg" alt="Настани фотографија 4"></div><div class="carousel-card__overlay"><div class="carousel-card__top"><span class="carousel-card__label">Настани</span><span class="carousel-card__tag">04</span></div><div class="carousel-card__bottom"><span class="carousel-card__title">Фотографија</span><svg class="carousel-card__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></div></div></div></li>
+                                <li class="splide__slide"><div class="carousel-card" tabindex="0"><div class="carousel-card__image"><img src="krstevka.jpg" alt="Настани фотографија 5"></div><div class="carousel-card__overlay"><div class="carousel-card__top"><span class="carousel-card__label">Настани</span><span class="carousel-card__tag">05</span></div><div class="carousel-card__bottom"><span class="carousel-card__title">Фотографија</span><svg class="carousel-card__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></div></div></div></li>
+                                <li class="splide__slide"><div class="carousel-card" tabindex="0"><div class="carousel-card__image"><img src="krstevka1.jpg" alt="Настани фотографија 6"></div><div class="carousel-card__overlay"><div class="carousel-card__top"><span class="carousel-card__label">Настани</span><span class="carousel-card__tag">06</span></div><div class="carousel-card__bottom"><span class="carousel-card__title">Фотографија</span><svg class="carousel-card__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></div></div></div></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div style="height: 40vh;" aria-hidden="true"></div>
+
+        <!-- ===== CATEGORY: СОЛО СЛИКИ ===== -->
+        <section id="solo" class="sticky-section py-20 md:py-28 px-4 md:px-8" style="z-index: 5;">
+            <div class="fade-section max-w-6xl mx-auto w-full">
+                <h3 class="font-heading text-center mb-4"
+                    style="font-size: clamp(32px, 5vw, 56px); letter-spacing: 4px;">
+                    Соло слики
+                </h3>
+                <div class="section-accent"></div>
+                <div class="carousel-container">
+                    <div id="splide-solo" class="splide" aria-label="Соло слики галерија">
+                        <div class="splide__track">
+                            <ul class="splide__list">
+                                <li class="splide__slide"><div class="carousel-card" tabindex="0"><div class="carousel-card__image"><img src="sliki/sliki-1.jpg" alt="Соло слика 1"></div><div class="carousel-card__overlay"><div class="carousel-card__top"><span class="carousel-card__label">Соло</span><span class="carousel-card__tag">01</span></div><div class="carousel-card__bottom"><span class="carousel-card__title">Фотографија</span><svg class="carousel-card__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></div></div></div></li>
+                                <li class="splide__slide"><div class="carousel-card" tabindex="0"><div class="carousel-card__image"><img src="sliki/sliki-2.jpg" alt="Соло слика 2"></div><div class="carousel-card__overlay"><div class="carousel-card__top"><span class="carousel-card__label">Соло</span><span class="carousel-card__tag">02</span></div><div class="carousel-card__bottom"><span class="carousel-card__title">Фотографија</span><svg class="carousel-card__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></div></div></div></li>
+                                <li class="splide__slide"><div class="carousel-card" tabindex="0"><div class="carousel-card__image"><img src="sliki/sliki-3.jpg" alt="Соло слика 3"></div><div class="carousel-card__overlay"><div class="carousel-card__top"><span class="carousel-card__label">Соло</span><span class="carousel-card__tag">03</span></div><div class="carousel-card__bottom"><span class="carousel-card__title">Фотографија</span><svg class="carousel-card__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></div></div></div></li>
+                                <li class="splide__slide"><div class="carousel-card" tabindex="0"><div class="carousel-card__image"><img src="sliki/sliki-4.jpg" alt="Соло слика 4"></div><div class="carousel-card__overlay"><div class="carousel-card__top"><span class="carousel-card__label">Соло</span><span class="carousel-card__tag">04</span></div><div class="carousel-card__bottom"><span class="carousel-card__title">Фотографија</span><svg class="carousel-card__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></div></div></div></li>
+                                <li class="splide__slide"><div class="carousel-card" tabindex="0"><div class="carousel-card__image"><img src="sliki/sliki-5.jpg" alt="Соло слика 5"></div><div class="carousel-card__overlay"><div class="carousel-card__top"><span class="carousel-card__label">Соло</span><span class="carousel-card__tag">05</span></div><div class="carousel-card__bottom"><span class="carousel-card__title">Фотографија</span><svg class="carousel-card__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></div></div></div></li>
+                                <li class="splide__slide"><div class="carousel-card" tabindex="0"><div class="carousel-card__image"><img src="sliki/sliki-6.jpg" alt="Соло слика 6"></div><div class="carousel-card__overlay"><div class="carousel-card__top"><span class="carousel-card__label">Соло</span><span class="carousel-card__tag">06</span></div><div class="carousel-card__bottom"><span class="carousel-card__title">Фотографија</span><svg class="carousel-card__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></div></div></div></li>
+                                <li class="splide__slide"><div class="carousel-card" tabindex="0"><div class="carousel-card__image"><img src="sliki/sliki-7.jpg" alt="Соло слика 7"></div><div class="carousel-card__overlay"><div class="carousel-card__top"><span class="carousel-card__label">Соло</span><span class="carousel-card__tag">07</span></div><div class="carousel-card__bottom"><span class="carousel-card__title">Фотографија</span><svg class="carousel-card__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></div></div></div></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div style="height: 60vh;" aria-hidden="true"></div>
+
+        <!-- ===== CATEGORY: ПРОМОЦИИ ===== -->
+        <section id="promo" class="sticky-section py-20 md:py-28 px-4 md:px-8" style="z-index: 6;">
+            <div class="fade-section max-w-6xl mx-auto w-full">
+                <h3 class="font-heading text-center mb-4"
+                    style="font-size: clamp(32px, 5vw, 56px); letter-spacing: 4px;">
+                    Промоции
+                </h3>
+                <div class="section-accent"></div>
+                <div class="carousel-container">
+                    <div id="splide-promo" class="splide" aria-label="Промоции галерија">
+                        <div class="splide__track">
+                            <ul class="splide__list">
+                                <li class="splide__slide"><div class="carousel-card" tabindex="0"><div class="carousel-card__image"><img src="promocija/promo-1.jpg" alt="Промоција фотографија 1"></div><div class="carousel-card__overlay"><div class="carousel-card__top"><span class="carousel-card__label">Промо</span><span class="carousel-card__tag">01</span></div><div class="carousel-card__bottom"><span class="carousel-card__title">Фотографија</span><svg class="carousel-card__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></div></div></div></li>
+                                <li class="splide__slide"><div class="carousel-card" tabindex="0"><div class="carousel-card__image"><img src="promocija/promo-2.jpg" alt="Промоција фотографија 2"></div><div class="carousel-card__overlay"><div class="carousel-card__top"><span class="carousel-card__label">Промо</span><span class="carousel-card__tag">02</span></div><div class="carousel-card__bottom"><span class="carousel-card__title">Фотографија</span><svg class="carousel-card__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></div></div></div></li>
+                                <li class="splide__slide"><div class="carousel-card" tabindex="0"><div class="carousel-card__image"><img src="promocija/promo-3.jpg" alt="Промоција фотографија 3"></div><div class="carousel-card__overlay"><div class="carousel-card__top"><span class="carousel-card__label">Промо</span><span class="carousel-card__tag">03</span></div><div class="carousel-card__bottom"><span class="carousel-card__title">Фотографија</span><svg class="carousel-card__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></div></div></div></li>
+                                <li class="splide__slide"><div class="carousel-card" tabindex="0"><div class="carousel-card__image"><img src="promocija/promo-4.webp" alt="Промоција фотографија 4"></div><div class="carousel-card__overlay"><div class="carousel-card__top"><span class="carousel-card__label">Промо</span><span class="carousel-card__tag">04</span></div><div class="carousel-card__bottom"><span class="carousel-card__title">Фотографија</span><svg class="carousel-card__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></div></div></div></li>
+                                <li class="splide__slide"><div class="carousel-card" tabindex="0"><div class="carousel-card__image"><img src="promocija/promo-5.jpg" alt="Промоција фотографија 5"></div><div class="carousel-card__overlay"><div class="carousel-card__top"><span class="carousel-card__label">Промо</span><span class="carousel-card__tag">05</span></div><div class="carousel-card__bottom"><span class="carousel-card__title">Фотографија</span><svg class="carousel-card__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></div></div></div></li>
+                                <li class="splide__slide"><div class="carousel-card" tabindex="0"><div class="carousel-card__image"><img src="promocija/promo-6.jpg" alt="Промоција фотографија 6"></div><div class="carousel-card__overlay"><div class="carousel-card__top"><span class="carousel-card__label">Промо</span><span class="carousel-card__tag">06</span></div><div class="carousel-card__bottom"><span class="carousel-card__title">Фотографија</span><svg class="carousel-card__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></div></div></div></li>
+                                <li class="splide__slide"><div class="carousel-card" tabindex="0"><div class="carousel-card__image"><img src="promocija/promo-7.jpg" alt="Промоција фотографија 7"></div><div class="carousel-card__overlay"><div class="carousel-card__top"><span class="carousel-card__label">Промо</span><span class="carousel-card__tag">07</span></div><div class="carousel-card__bottom"><span class="carousel-card__title">Фотографија</span><svg class="carousel-card__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></div></div></div></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div style="height: 80vh;" aria-hidden="true"></div>
+
+        </div> <!-- End rest-of-site wrapper -->
+
+        <!-- ===== FINAL CTA ===== -->
+        <section id="cta" class="py-24 md:py-32 px-4 text-center" style="z-index: 7; position: relative; background: #000; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; overflow: hidden;">
+            <video class="cta-bg-video" autoplay loop muted playsinline>
+                <source src="extend.mp4" type="video/mp4">
+            </video>
+            <div class="max-w-2xl mx-auto">
+                <h3 class="font-heading mb-4" style="font-size: clamp(28px, 5vw, 48px); letter-spacing: 4px;">
+                    Подготвени?
+                </h3>
+                <div class="mb-10"></div>
+                <a href="tel:+38972264973" class="cta-btn">
+                    Резервирај
+                </a>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="content-overlay py-10 px-4 text-center border-t"
+        style="z-index: 8; border-color: rgba(54,69,79,0.2);">
+        <p class="font-heading text-sm opacity-30" style="letter-spacing: 3px;">SMILEVSKI PRODUCTION</p>
+        <p class="font-body text-xs opacity-20 mt-2">&copy; 2026 Smilevski Production. Сите права задржани.</p>
+    </footer>
+
+    <!-- ===== JAVASCRIPT ===== -->
+    <script>
+            (function () {
+                'use strict';
+
+                // ===== CONSTANTS =====
+                const TOTAL_FRAMES = 145;
+                const FRAME_PATH = 'frames/frame_';
+                const MORPH_THRESHOLD = 80;
+                const frames = [];
+                let currentFrame = -1;
+                let rafId = null;
+
+                // ===== CANVAS SETUP =====
+                const canvas = document.getElementById('scroll-canvas');
+                const ctx = canvas.getContext('2d');
+
+                function resizeCanvas() {
+                    const dpr = window.devicePixelRatio || 1;
+                    const w = window.innerWidth;
+                    const h = window.innerHeight;
+                    canvas.width = w * dpr;
+                    canvas.height = h * dpr;
+                    canvas.style.width = w + 'px';
+                    canvas.style.height = h + 'px';
+                    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+                    if (frames[currentFrame >= 0 ? currentFrame : 0]) {
+                        drawFrame(frames[currentFrame >= 0 ? currentFrame : 0]);
+                    }
+                }
+
+                // ===== DRAWING FUNCTIONS =====
+                function drawFrameCover(img) {
+                    const cw = canvas.width / (window.devicePixelRatio || 1);
+                    const ch = canvas.height / (window.devicePixelRatio || 1);
+                    const ir = img.width / img.height;
+                    const cr = cw / ch;
+                    let dw, dh, ox, oy;
+                    if (ir > cr) {
+                        dh = ch; dw = ch * ir; ox = (cw - dw) / 2; oy = 0;
+                    } else {
+                        dw = cw; dh = cw / ir; ox = 0; oy = (ch - dh) / 2;
+                    }
+                    ctx.clearRect(0, 0, cw, ch);
+                    ctx.drawImage(img, ox, oy, dw, dh);
+                }
+
+                function drawFrameContain(img, zoom) {
+                    zoom = zoom || 1.2;
+                    const cw = canvas.width / (window.devicePixelRatio || 1);
+                    const ch = canvas.height / (window.devicePixelRatio || 1);
+                    const ir = img.width / img.height;
+                    const cr = cw / ch;
+                    let dw, dh;
+                    if (ir > cr) { dw = cw * zoom; dh = dw / ir; }
+                    else { dh = ch * zoom; dw = dh * ir; }
+                    const ox = (cw - dw) / 2;
+                    const oy = (ch - dh) / 2;
+                    ctx.clearRect(0, 0, cw, ch);
+                    ctx.drawImage(img, ox, oy, dw, dh);
+                }
+
+                function drawFrame(img) {
+                    if (window.innerWidth <= 768) drawFrameContain(img);
+                    else drawFrameCover(img);
+                }
+
+                // ===== FRAME PRELOADING =====
+                function preloadFrames() {
+                    return new Promise((resolve) => {
+                        let loaded = 0;
+                        for (let i = 1; i <= TOTAL_FRAMES; i++) {
+                            const img = new Image();
+                            const idx = String(i).padStart(4, '0');
+                            img.src = FRAME_PATH + idx + '.jpg';
+                            img.onload = img.onerror = function () {
+                                loaded++;
+                                updateLoader(loaded / TOTAL_FRAMES);
+                                if (loaded === TOTAL_FRAMES) resolve();
+                            };
+                            frames[i - 1] = img;
+                        }
+                    });
+                }
+
+                // ===== LOADER =====
+                function updateLoader(progress) {
+                    const fill = document.getElementById('loader-fill');
+                    const percent = document.getElementById('loader-percent');
+                    const pct = Math.round(progress * 100);
+                    fill.style.width = pct + '%';
+                    percent.textContent = pct + '%';
+                }
+
+                function hideLoader() {
+                    const loader = document.getElementById('loader');
+                    loader.classList.add('hidden');
+                    setTimeout(() => {
+                        loader.remove();
+                        // Vertical wipe: lightest panel slides up first, then darker ones follow
+                        const wipeTl = gsap.timeline();
+                        wipeTl
+                            .to('#intro-wipe .wipe-panel:nth-child(3)', { yPercent: -100, duration: 0.55, ease: 'expo.inOut' }, 0)
+                            .to('#intro-wipe .wipe-panel:nth-child(2)', { yPercent: -100, duration: 0.55, ease: 'expo.inOut' }, 0.18)
+                            .to('#intro-wipe .wipe-panel:nth-child(1)', { yPercent: -100, duration: 0.55, ease: 'expo.inOut' }, 0.36)
+                            .set('#intro-wipe', { display: 'none' });
+                    }, 600);
+                }
+
+                // ===== SCROLL-DRIVEN VIDEO =====
+                function handleScrollAnimation() {
+                    const section = document.getElementById('scroll-video');
+                    if (!section) return;
+                    const rect = section.getBoundingClientRect();
+                    const sectionTop = -rect.top;
+                    const windowH = window.innerHeight;
+                    const sectionHeight = section.offsetHeight - windowH;
+                    if (sectionHeight <= 0) return;
+
+                    // The last 2.5 window heights of scroll are used for the long, slow zoom transition
+                    const transitionPhaseLength = windowH * 2.5;
+                    const videoFramesScrollLength = Math.max(1, sectionHeight - transitionPhaseLength);
+
+                    const frameProgress = Math.max(0, Math.min(1, sectionTop / videoFramesScrollLength));
+                    const frameIndex = Math.min(TOTAL_FRAMES - 1, Math.floor(frameProgress * (TOTAL_FRAMES - 1)));
+
+                    if (frameIndex !== currentFrame && frames[frameIndex]) {
+                        currentFrame = frameIndex;
+                        drawFrame(frames[currentFrame]);
+                    }
+
+                    // Zoom transition happens strictly AFTER frames finish
+                    const wrap = document.querySelector('.scroll-canvas-wrap');
+                    const sportSection = document.getElementById('sport');
+                    const restOfSite = document.getElementById('rest-of-site');
+                    const canvas = document.getElementById('scroll-canvas');
+
+                    let zoomProgress = 0;
+                    if (sectionTop > videoFramesScrollLength) {
+                        zoomProgress = Math.min(1, (sectionTop - videoFramesScrollLength) / transitionPhaseLength);
+                    }
+
+                    if (zoomProgress > 0) {
+                        // Easing curve going from 0 to 1 smoothly
+                        const easeInCubic = Math.pow(zoomProgress, 3);
+                        
+                        // Extremely large scale to zoom through the lens
+                        const scale = 1.05 + (easeInCubic * 80); 
+                        canvas.style.transform = `scale(${scale})`;
+                        canvas.style.transformOrigin = '55% 50%';
+                        
+                        // Fade out the wrap to reveal the next section zooming out
+                        let fadeProgress = 0;
+                        const fadeStart = 0.3; // start fading a bit after zoom begins 
+                        if (zoomProgress > fadeStart) {
+                             fadeProgress = (zoomProgress - fadeStart) / (1 - fadeStart);
+                        }
+                        wrap.style.opacity = Math.max(0, 1 - Math.pow(fadeProgress, 2));
+                        section.style.background = `rgba(0,0,0, ${Math.max(0, 1 - fadeProgress)})`;
+                        section.style.pointerEvents = (zoomProgress >= 0.75) ? 'none' : '';
+
+                        // Sport section zoom out effect (from 2.5 scale down to 1.0)
+                        if (sportSection) {
+                            if (zoomProgress >= 0.75) {
+                                sportSection.style.transform = '';
+                                if (!window.__sportSplideRefreshed && window.__sportSplide) {
+                                    window.__sportSplide.refresh();
+                                    window.__sportSplideRefreshed = true;
+                                }
+                            } else {
+                                const easeOutCubic = 1 - Math.pow(1 - zoomProgress, 3);
+                                const sportScale = 2.5 - (1.5 * easeOutCubic);
+                                sportSection.style.transform = `scale(${sportScale})`;
+                                sportSection.style.transformOrigin = '50% 50%';
+                            }
+                        }
+                    } else {
+                        canvas.style.transform = `scale(1.05)`;
+                        canvas.style.opacity = 1;
+                        wrap.style.opacity = 1;
+                        section.style.background = '#000';
+                        section.style.pointerEvents = '';
+                        if (sportSection) {
+                            sportSection.style.transform = `scale(2.5)`;
+                            window.__sportSplideRefreshed = false;
+                        }
+                    }
+
+                    // Freeze #rest-of-site vertically so it doesn't slide up during overlap
+                    if (restOfSite) {
+                        if (zoomProgress >= 1) {
+                            // Clear transform entirely so position:sticky works on child sections
+                            restOfSite.style.transform = '';
+                        } else if (zoomProgress <= 0) {
+                            restOfSite.style.transform = `translateY(${-transitionPhaseLength}px)`;
+                        } else {
+                            restOfSite.style.transform = `translateY(${-transitionPhaseLength * (1 - zoomProgress)}px)`;
+                        }
+                    }
+                }
+
+                // ===== MOBILE MENU =====
+                const navHamburger = document.getElementById('navHamburger');
+                const navLinks = document.getElementById('navLinks');
+                navHamburger.addEventListener('click', () => {
+                    navHamburger.classList.toggle('open');
+                    navLinks.classList.toggle('open');
+                });
+                navLinks.querySelectorAll('a').forEach(a => {
+                    a.addEventListener('click', () => {
+                        navHamburger.classList.remove('open');
+                        navLinks.classList.remove('open');
+                    });
+                });
+
+                // ===== NAVBAR SCROLL =====
+                function handleNavbar() {
+                    const navbar = document.getElementById('navbar');
+                    if (window.scrollY > MORPH_THRESHOLD) navbar.classList.add('scrolled');
+                    else navbar.classList.remove('scrolled');
+                }
+
+                // ===== SCROLL PROGRESS BAR =====
+                function handleProgressBar() {
+                    const bar = document.getElementById('scroll-progress');
+                    const scrollTop = window.scrollY;
+                    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+                    if (docHeight > 0) {
+                        bar.style.width = ((scrollTop / docHeight) * 100) + '%';
+                    }
+                }
+
+
+
+                // ===== SECTION FADE-IN =====
+                function initFadeSections() {
+                    const sections = document.querySelectorAll('.fade-section');
+                    const observer = new IntersectionObserver((entries) => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting) {
+                                entry.target.classList.add('visible');
+                                observer.unobserve(entry.target);
+                            }
+                        });
+                    }, { threshold: 0.15 });
+
+                    sections.forEach(s => observer.observe(s));
+                }
+
+                // ===== COMBINED SCROLL HANDLER =====
+                function onScroll() {
+                    handleScrollAnimation();
+                    handleNavbar();
+                    handleProgressBar();
+                }
+
+                // ===== SMOOTH SCROLL FOR ANCHOR LINKS (via Lenis) =====
+                // Deferred until Lenis is ready — see Lenis init block below
+
+                // ===== INIT =====
+                async function init() {
+                    document.body.style.overflow = 'hidden';
+                    resizeCanvas();
+
+                    await preloadFrames();
+                    hideLoader();
+
+                    document.body.style.overflow = '';
+                    if (frames[0]) {
+                        currentFrame = 0;
+                        drawFrame(frames[0]);
+                    }
+
+                    window.addEventListener('scroll', onScroll, { passive: true });
+                    window.addEventListener('resize', resizeCanvas);
+
+                    initFadeSections();
+                }
+
+                init();
+            })();
+    </script>
+
+    <!-- ===== SPLIDE CAROUSEL INIT ===== -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var splideOptions = {
+                type: 'loop',
+                drag: true,
+                perPage: 3,
+                gap: '1.5rem',
+                padding: { right: '10%' },
+                pagination: false,
+                arrows: false,
+                breakpoints: {
+                    768: {
+                        perPage: 1,
+                        padding: { right: '15%' }
+                    }
+                }
+            };
+
+            ['splide-sport', 'splide-events', 'splide-solo', 'splide-promo'].forEach(function (id) {
+                var el = document.getElementById(id);
+                if (el) {
+                    var instance = new Splide('#' + id, splideOptions).mount();
+                    if (id === 'splide-sport') {
+                        window.__sportSplide = instance;
+                    }
+                }
+            });
+        });
+    </script>
+
+    <!-- ===== LENIS SMOOTH SCROLL ===== -->
+    <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
+    <script>
+        (function () {
+            'use strict';
+
+            const lenis = new Lenis({
+                duration: 1.0,
+                easing: function (t) { return Math.min(1, 1.001 - Math.pow(2, -10 * t)); },
+                smoothWheel: true,
+                touchMultiplier: 1.2
+            });
+
+            // Standalone RAF loop (no GSAP)
+            function raf(time) {
+                lenis.raf(time);
+                requestAnimationFrame(raf);
+            }
+            requestAnimationFrame(raf);
+
+            // Override anchor link clicks to use Lenis
+            document.querySelectorAll('a[href^="#"]').forEach(function (link) {
+                link.addEventListener('click', function (e) {
+                    var href = link.getAttribute('href');
+                    var target = document.querySelector(href);
+                    if (target) {
+                        e.preventDefault();
+                        lenis.scrollTo(target);
+                    }
+                });
+            });
+        })();
+    </script>
+
+
+</body>
+
+</html>
