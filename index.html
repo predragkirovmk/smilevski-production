@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SMILEVSKI PRODUCTION</title>
+    <link rel="icon" type="image/png" href="logo.png">
     <meta name="description" content="Професионална фотографија и видео продукција - Smilevski Production">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -45,6 +46,7 @@
 
         html {
             font-size: 100%;
+            -webkit-text-size-adjust: 100%;
         }
 
         .font-heading {
@@ -56,6 +58,7 @@
             background: #000;
             color: #fff;
             overflow-x: hidden;
+            -webkit-overflow-scrolling: touch;
         }
 
         /* ===== LOADER ===== */
@@ -329,7 +332,7 @@
             left: 50%;
             transform: translate(-50%, -50%);
             width: 900px;
-            max-width: 100%;
+            max-width: 100vw;
             aspect-ratio: 1;
             perspective: 1500px;
             z-index: 0;
@@ -422,11 +425,6 @@
             clip-path: inset(0 round 16px);
         }
 
-        @media (max-width: 768px) {
-            .scroll-animation {
-                height: 400vh;
-            }
-        }
 
         @media (min-width: 769px) and (max-width: 1024px) {
             .scroll-animation {
@@ -594,10 +592,50 @@
             overflow: hidden;
         }
 
-        /* ===== MOBILE SPACER REDUCTION ===== */
+        /* ===== MOBILE OVERRIDES ===== */
         @media (max-width: 768px) {
+            .hero {
+                position: relative;
+            }
+
+            .scroll-canvas-wrap {
+                position: relative !important;
+                height: 100svh !important;
+            }
+
             .sticky-section {
                 position: relative;
+                height: auto;
+                min-height: 0;
+            }
+
+            /* Hide desktop spacer divs */
+            .mobile-spacer-hide {
+                display: none !important;
+            }
+
+            /* Option B: Scroll animation is not needed on mobile since the video is natively in the hero */
+            .scroll-animation {
+                display: none !important;
+            }
+
+            /* Hide scroll canvas entirely on mobile */
+            #scroll-canvas {
+                display: none !important;
+            }
+
+            /* Show mobile auto-play video inside the hero */
+            #mobile-hero-video {
+                display: block !important;
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                transform: scale(1.05); /* crop watermark */
+                z-index: 0;
+                opacity: 0.65; /* darken video so text pops */
             }
         }
 
@@ -752,6 +790,10 @@
                 <span></span>
             </button>
             <div class="nav-links" id="navLinks">
+                <a href="#sport">Спорт</a>
+                <a href="#events">Настани</a>
+                <a href="#solo">Соло</a>
+                <a href="#promo">Промоции</a>
                 <a href="#cta">Резервации</a>
             </div>
         </div>
@@ -762,75 +804,13 @@
         <!-- ===== STICKY HERO ===== -->
         <header class="hero">
 
-            <!-- ===== COMET CIRCLES BACKGROUND ===== -->
-            <div class="circle-container" aria-hidden="true">
-                <!-- Circle 1 - Teal -->
-                <div class="circle-wrapper circle1">
-                    <svg viewBox="0 0 600 600" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision">
-                        <defs>
-                            <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="0%">
-                                <stop offset="0%" stop-color="rgb(45 212 191)" stop-opacity="1" />
-                                <stop offset="100%" stop-color="rgb(17 94 89)" stop-opacity="0.1" />
-                            </linearGradient>
-                        </defs>
-                        <circle cx="300" cy="300" r="250" fill="none" stroke="url(#grad1)" stroke-width="1.5"
-                                stroke-dasharray="520 1050" stroke-dashoffset="20">
-                            <animate attributeName="stroke-dashoffset" from="20" to="1590" dur="3s" repeatCount="indefinite" />
-                        </circle>
-                    </svg>
-                </div>
-
-                <!-- Circle 2 - Orange -->
-                <div class="circle-wrapper circle2">
-                    <svg viewBox="0 0 800 800" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision">
-                        <defs>
-                            <linearGradient id="grad2" x1="0%" y1="0%" x2="100%" y2="0%">
-                                <stop offset="-20%" stop-color="rgb(251 146 60)" stop-opacity="0.05" />
-                                <stop offset="80%" stop-color="rgb(249 115 22)" stop-opacity="1" />
-                            </linearGradient>
-                        </defs>
-                        <circle cx="400" cy="400" r="300" fill="none" stroke="url(#grad2)" stroke-width="1.5"
-                                stroke-dasharray="900 985" stroke-dashoffset="0">
-                            <animate attributeName="stroke-dashoffset" from="0" to="-1885" dur="3s" repeatCount="indefinite" />
-                        </circle>
-                    </svg>
-                </div>
-
-                <!-- Circle 3 - Rose -->
-                <div class="circle-wrapper circle3">
-                    <svg viewBox="0 0 600 600" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision">
-                        <defs>
-                            <linearGradient id="grad3" x1="0%" y1="0%" x2="100%" y2="0%">
-                                <stop offset="0%" stop-color="rgb(251 113 133)" stop-opacity="1" />
-                                <stop offset="100%" stop-color="rgb(225 29 72)" stop-opacity="0.1" />
-                            </linearGradient>
-                        </defs>
-                        <circle cx="300" cy="300" r="150" fill="none" stroke="url(#grad3)" stroke-width="1.5"
-                                stroke-dasharray="400 542" stroke-dashoffset="60">
-                            <animate attributeName="stroke-dashoffset" from="60" to="1002" dur="3s" repeatCount="indefinite" />
-                        </circle>
-                    </svg>
-                </div>
-
-                <!-- Circle 4 - Amber -->
-                <div class="circle-wrapper circle4">
-                    <svg viewBox="0 0 800 800" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision">
-                        <defs>
-                            <linearGradient id="grad4" x1="0%" y1="0%" x2="100%" y2="0%">
-                                <stop offset="-20%" stop-color="rgb(252 211 77)" stop-opacity="0.05" />
-                                <stop offset="80%" stop-color="rgb(251 191 36)" stop-opacity="1" />
-                            </linearGradient>
-                        </defs>
-                        <circle cx="400" cy="400" r="200" fill="none" stroke="url(#grad4)" stroke-width="1.5"
-                                stroke-dasharray="500 756" stroke-dashoffset="300">
-                            <animate attributeName="stroke-dashoffset" from="300" to="-956" dur="2s" repeatCount="indefinite" />
-                        </circle>
-                    </svg>
-                </div>
-            </div>
+            <!-- ===== MOBILE HERO BACKGROUND VIDEO ===== -->
+            <video id="mobile-hero-video" autoplay loop muted playsinline aria-hidden="true" style="display: none;">
+                <source src="mobile-hero-boomerang.mp4" type="video/mp4">
+            </video>
 
             <!-- ===== HERO TOP 1/3 — Floating Cameras ===== -->
-            <section class="relative overflow-hidden" style="height: 33.33vh; flex-shrink: 0; background: transparent;">
+            <section class="relative overflow-hidden" style="height: 33.33dvh; flex-shrink: 0; background: transparent;">
                 <!-- SVG Downward Curve -->
                 <svg class="absolute bottom-0 left-0 w-full" viewBox="0 0 1440 120" preserveAspectRatio="none"
                     style="height: 60px;">
@@ -858,8 +838,6 @@
             <div class="scroll-canvas-wrap">
                 <canvas id="scroll-canvas" role="img"
                     aria-label="Анимација на камера контролирана со скролање"></canvas>
-
-
             </div>
         </section>
 
@@ -916,7 +894,7 @@
                 </div>
             </div>
         </section>
-        <div style="height: 40vh;" aria-hidden="true"></div>
+        <div class="mobile-spacer-hide" style="height: 40vh;" aria-hidden="true"></div>
 
         <!-- ===== CATEGORY: СОЛО СЛИКИ ===== -->
         <section id="solo" class="sticky-section py-20 md:py-28 px-4 md:px-8" style="z-index: 5;">
@@ -943,7 +921,7 @@
                 </div>
             </div>
         </section>
-        <div style="height: 60vh;" aria-hidden="true"></div>
+        <div class="mobile-spacer-hide" style="height: 60vh;" aria-hidden="true"></div>
 
         <!-- ===== CATEGORY: ПРОМОЦИИ ===== -->
         <section id="promo" class="sticky-section py-20 md:py-28 px-4 md:px-8" style="z-index: 6;">
@@ -970,7 +948,7 @@
                 </div>
             </div>
         </section>
-        <div style="height: 80vh;" aria-hidden="true"></div>
+        <div class="mobile-spacer-hide" style="height: 80vh;" aria-hidden="true"></div>
 
         </div> <!-- End rest-of-site wrapper -->
 
@@ -1016,18 +994,34 @@
                 const canvas = document.getElementById('scroll-canvas');
                 const ctx = canvas.getContext('2d');
 
-                const isMobile = window.innerWidth <= 768;
+                let isMobile = window.innerWidth <= 768 || ('ontouchstart' in window && window.innerWidth <= 1024);
+                let activeDpr = 1;
+
+                // On mobile: load every 3rd frame to save memory (~48 frames vs 145)
+                const MOBILE_FRAME_STEP = 3;
+                const mobileFrameIndices = [];
+                if (isMobile) {
+                    for (let i = 0; i < TOTAL_FRAMES; i += MOBILE_FRAME_STEP) {
+                        mobileFrameIndices.push(i);
+                    }
+                }
+                const EFFECTIVE_FRAMES = isMobile ? mobileFrameIndices.length : TOTAL_FRAMES;
 
                 function resizeCanvas() {
                     const maxDpr = isMobile ? 1.5 : 2;
-                    const dpr = Math.min(window.devicePixelRatio || 1, maxDpr);
-                    const w = window.innerWidth;
-                    const h = window.innerHeight;
-                    canvas.width = w * dpr;
-                    canvas.height = h * dpr;
-                    canvas.style.width = w + 'px';
-                    canvas.style.height = h + 'px';
-                    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+                    activeDpr = Math.min(window.devicePixelRatio || 1, maxDpr);
+                    if (isMobile) {
+                        // Option B: canvas is hidden on mobile, no resize needed
+                        return;
+                    } else {
+                        const w = window.innerWidth;
+                        const h = window.innerHeight;
+                        canvas.width = w * activeDpr;
+                        canvas.height = h * activeDpr;
+                        canvas.style.width = w + 'px';
+                        canvas.style.height = h + 'px';
+                    }
+                    ctx.setTransform(activeDpr, 0, 0, activeDpr, 0, 0);
                     if (frames[currentFrame >= 0 ? currentFrame : 0]) {
                         drawFrame(frames[currentFrame >= 0 ? currentFrame : 0]);
                     }
@@ -1035,8 +1029,8 @@
 
                 // ===== DRAWING FUNCTIONS =====
                 function drawFrameCover(img) {
-                    const cw = canvas.width / (window.devicePixelRatio || 1);
-                    const ch = canvas.height / (window.devicePixelRatio || 1);
+                    const cw = canvas.width / activeDpr;
+                    const ch = canvas.height / activeDpr;
                     const ir = img.width / img.height;
                     const cr = cw / ch;
                     let dw, dh, ox, oy;
@@ -1051,8 +1045,8 @@
 
                 function drawFrameContain(img, zoom) {
                     zoom = zoom || 1.2;
-                    const cw = canvas.width / (window.devicePixelRatio || 1);
-                    const ch = canvas.height / (window.devicePixelRatio || 1);
+                    const cw = canvas.width / activeDpr;
+                    const ch = canvas.height / activeDpr;
                     const ir = img.width / img.height;
                     const cr = cw / ch;
                     let dw, dh;
@@ -1065,24 +1059,30 @@
                 }
 
                 function drawFrame(img) {
-                    if (window.innerWidth <= 768) drawFrameContain(img);
-                    else drawFrameCover(img);
+                    drawFrameCover(img);
                 }
 
                 // ===== FRAME PRELOADING =====
                 function preloadFrames() {
                     return new Promise((resolve) => {
-                        let loaded = 0;
-                        for (let i = 1; i <= TOTAL_FRAMES; i++) {
-                            const img = new Image();
-                            const idx = String(i).padStart(4, '0');
-                            img.src = FRAME_PATH + idx + '.jpg';
-                            img.onload = img.onerror = function () {
-                                loaded++;
-                                updateLoader(loaded / TOTAL_FRAMES);
-                                if (loaded === TOTAL_FRAMES) resolve();
-                            };
-                            frames[i - 1] = img;
+                        if (isMobile) {
+                            // Option B: Skip frame preloading on mobile completely
+                            updateLoader(1);
+                            resolve();
+                        } else {
+                            // Desktop: load all frames
+                            let loaded = 0;
+                            for (let i = 1; i <= TOTAL_FRAMES; i++) {
+                                const img = new Image();
+                                const idx = String(i).padStart(4, '0');
+                                img.src = FRAME_PATH + idx + '.jpg';
+                                img.onload = img.onerror = function () {
+                                    loaded++;
+                                    updateLoader(loaded / TOTAL_FRAMES);
+                                    if (loaded === TOTAL_FRAMES) resolve();
+                                };
+                                frames[i - 1] = img;
+                            }
                         }
                     });
                 }
@@ -1127,25 +1127,7 @@
                     const canvasEl = document.getElementById('scroll-canvas');
 
                     if (isMobile) {
-                        // === MOBILE: simple fade transition, no transforms on rest-of-site ===
-                        const frameProgress = Math.max(0, Math.min(1, sectionTop / sectionHeight));
-                        const frameIndex = Math.min(TOTAL_FRAMES - 1, Math.floor(frameProgress * (TOTAL_FRAMES - 1)));
-
-                        if (frameIndex !== currentFrame && frames[frameIndex]) {
-                            currentFrame = frameIndex;
-                            drawFrame(frames[currentFrame]);
-                        }
-
-                        // Simple fade-out near the end
-                        const fadeStart = 0.85;
-                        if (frameProgress > fadeStart) {
-                            const fade = (frameProgress - fadeStart) / (1 - fadeStart);
-                            wrap.style.opacity = Math.max(0, 1 - fade);
-                            section.style.pointerEvents = fade > 0.5 ? 'none' : '';
-                        } else {
-                            wrap.style.opacity = 1;
-                            section.style.pointerEvents = '';
-                        }
+                        // === MOBILE: Option B simple static autoplay background hero ===
                         // No transforms on rest-of-site or sport section on mobile
                         if (restOfSite) restOfSite.style.transform = '';
                         if (sportSection) sportSection.style.transform = '';
@@ -1289,15 +1271,25 @@
                     hideLoader();
 
                     document.body.style.overflow = '';
-                    if (frames[0]) {
-                        currentFrame = 0;
-                        drawFrame(frames[0]);
+
+                    // Draw first frame
+                    const firstFrameIdx = isMobile ? mobileFrameIndices[0] : 0;
+                    if (frames[firstFrameIdx]) {
+                        currentFrame = firstFrameIdx;
+                        drawFrame(frames[firstFrameIdx]);
                     }
 
                     // Only apply negative margin for desktop zoom transition
                     if (!isMobile) {
                         const restOfSite = document.getElementById('rest-of-site');
                         if (restOfSite) restOfSite.style.marginTop = '-100vh';
+                    }
+
+                    // Pause SVG comet animations on mobile to save CPU
+                    if (isMobile) {
+                        document.querySelectorAll('.circle-container svg animate').forEach(function(el) {
+                            el.setAttribute('repeatCount', '1');
+                        });
                     }
 
                     window.addEventListener('scroll', onScroll, { passive: true });
@@ -1347,33 +1339,47 @@
         (function () {
             'use strict';
 
-            const isMobileDevice = window.innerWidth <= 768 || 'ontouchstart' in window;
-            const lenis = new Lenis({
-                duration: 1.0,
-                easing: function (t) { return Math.min(1, 1.001 - Math.pow(2, -10 * t)); },
-                smoothWheel: true,
-                smoothTouch: false,
-                touchMultiplier: isMobileDevice ? 1.0 : 1.2
-            });
+            const isMobileDevice = window.innerWidth <= 768 || ('ontouchstart' in window && window.innerWidth <= 1024);
 
-            // Standalone RAF loop (no GSAP)
-            function raf(time) {
-                lenis.raf(time);
-                requestAnimationFrame(raf);
-            }
-            requestAnimationFrame(raf);
-
-            // Override anchor link clicks to use Lenis
-            document.querySelectorAll('a[href^="#"]').forEach(function (link) {
-                link.addEventListener('click', function (e) {
-                    var href = link.getAttribute('href');
-                    var target = document.querySelector(href);
-                    if (target) {
-                        e.preventDefault();
-                        lenis.scrollTo(target);
-                    }
+            if (!isMobileDevice) {
+                // Only use Lenis on desktop — it fights with native iOS/Android scrolling
+                const lenis = new Lenis({
+                    duration: 1.0,
+                    easing: function (t) { return Math.min(1, 1.001 - Math.pow(2, -10 * t)); },
+                    smoothWheel: true,
+                    smoothTouch: false,
+                    touchMultiplier: 1.2
                 });
-            });
+
+                function raf(time) {
+                    lenis.raf(time);
+                    requestAnimationFrame(raf);
+                }
+                requestAnimationFrame(raf);
+
+                document.querySelectorAll('a[href^="#"]').forEach(function (link) {
+                    link.addEventListener('click', function (e) {
+                        var href = link.getAttribute('href');
+                        var target = document.querySelector(href);
+                        if (target) {
+                            e.preventDefault();
+                            lenis.scrollTo(target);
+                        }
+                    });
+                });
+            } else {
+                // Mobile: native smooth scroll for anchor links
+                document.querySelectorAll('a[href^="#"]').forEach(function (link) {
+                    link.addEventListener('click', function (e) {
+                        var href = link.getAttribute('href');
+                        var target = document.querySelector(href);
+                        if (target) {
+                            e.preventDefault();
+                            target.scrollIntoView({ behavior: 'smooth' });
+                        }
+                    });
+                });
+            }
         })();
     </script>
 
