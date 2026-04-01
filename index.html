@@ -303,6 +303,7 @@
             top: 0;
             z-index: 1;
             height: 100vh;
+            height: 100dvh;
             display: flex;
             flex-direction: column;
             overflow: hidden;
@@ -333,6 +334,7 @@
             perspective: 1500px;
             z-index: 0;
             pointer-events: none;
+            overflow: hidden;
         }
 
         .circle-wrapper {
@@ -382,6 +384,7 @@
             position: sticky;
             top: 0;
             height: 100vh;
+            height: 100dvh;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -403,6 +406,7 @@
             left: 0;
             width: 100%;
             height: 100vh;
+            height: 100dvh;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -420,7 +424,7 @@
 
         @media (max-width: 768px) {
             .scroll-animation {
-                height: 600vh;
+                height: 400vh;
             }
         }
 
@@ -588,6 +592,13 @@
 
         .carousel-container {
             overflow: hidden;
+        }
+
+        /* ===== MOBILE SPACER REDUCTION ===== */
+        @media (max-width: 768px) {
+            .sticky-section {
+                position: relative;
+            }
         }
 
         /* ===== SECTION DIVIDER ===== */
@@ -853,7 +864,7 @@
         </section>
 
         <!-- Wrapper for zoomed out transition -->
-        <div id="rest-of-site" style="margin-top: -100vh; position: relative; z-index: 5;">
+        <div id="rest-of-site" style="position: relative; z-index: 5;">
 
         <!-- ===== CATEGORY: СПОРТ ===== -->
         <section id="sport" class="sticky-section py-20 md:py-28 px-4 md:px-8" style="z-index: 3;">
@@ -964,7 +975,7 @@
         </div> <!-- End rest-of-site wrapper -->
 
         <!-- ===== FINAL CTA ===== -->
-        <section id="cta" class="py-24 md:py-32 px-4 text-center" style="z-index: 7; position: relative; background: #000; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; overflow: hidden;">
+        <section id="cta" class="py-24 md:py-32 px-4 text-center" style="z-index: 7; position: relative; background: #000; min-height: 100vh; min-height: 100dvh; display: flex; flex-direction: column; justify-content: center; overflow: hidden;">
             <video class="cta-bg-video" autoplay loop muted playsinline>
                 <source src="extend.mp4" type="video/mp4">
             </video>
@@ -1005,8 +1016,11 @@
                 const canvas = document.getElementById('scroll-canvas');
                 const ctx = canvas.getContext('2d');
 
+                const isMobile = window.innerWidth <= 768;
+
                 function resizeCanvas() {
-                    const dpr = window.devicePixelRatio || 1;
+                    const maxDpr = isMobile ? 1.5 : 2;
+                    const dpr = Math.min(window.devicePixelRatio || 1, maxDpr);
                     const w = window.innerWidth;
                     const h = window.innerHeight;
                     canvas.width = w * dpr;
@@ -1107,6 +1121,38 @@
                     const sectionHeight = section.offsetHeight - windowH;
                     if (sectionHeight <= 0) return;
 
+                    const wrap = document.querySelector('.scroll-canvas-wrap');
+                    const sportSection = document.getElementById('sport');
+                    const restOfSite = document.getElementById('rest-of-site');
+                    const canvasEl = document.getElementById('scroll-canvas');
+
+                    if (isMobile) {
+                        // === MOBILE: simple fade transition, no transforms on rest-of-site ===
+                        const frameProgress = Math.max(0, Math.min(1, sectionTop / sectionHeight));
+                        const frameIndex = Math.min(TOTAL_FRAMES - 1, Math.floor(frameProgress * (TOTAL_FRAMES - 1)));
+
+                        if (frameIndex !== currentFrame && frames[frameIndex]) {
+                            currentFrame = frameIndex;
+                            drawFrame(frames[currentFrame]);
+                        }
+
+                        // Simple fade-out near the end
+                        const fadeStart = 0.85;
+                        if (frameProgress > fadeStart) {
+                            const fade = (frameProgress - fadeStart) / (1 - fadeStart);
+                            wrap.style.opacity = Math.max(0, 1 - fade);
+                            section.style.pointerEvents = fade > 0.5 ? 'none' : '';
+                        } else {
+                            wrap.style.opacity = 1;
+                            section.style.pointerEvents = '';
+                        }
+                        // No transforms on rest-of-site or sport section on mobile
+                        if (restOfSite) restOfSite.style.transform = '';
+                        if (sportSection) sportSection.style.transform = '';
+                        return;
+                    }
+
+                    // === DESKTOP: full zoom transition ===
                     // The last 2.5 window heights of scroll are used for the long, slow zoom transition
                     const transitionPhaseLength = windowH * 2.5;
                     const videoFramesScrollLength = Math.max(1, sectionHeight - transitionPhaseLength);
@@ -1119,29 +1165,19 @@
                         drawFrame(frames[currentFrame]);
                     }
 
-                    // Zoom transition happens strictly AFTER frames finish
-                    const wrap = document.querySelector('.scroll-canvas-wrap');
-                    const sportSection = document.getElementById('sport');
-                    const restOfSite = document.getElementById('rest-of-site');
-                    const canvas = document.getElementById('scroll-canvas');
-
                     let zoomProgress = 0;
                     if (sectionTop > videoFramesScrollLength) {
                         zoomProgress = Math.min(1, (sectionTop - videoFramesScrollLength) / transitionPhaseLength);
                     }
 
                     if (zoomProgress > 0) {
-                        // Easing curve going from 0 to 1 smoothly
                         const easeInCubic = Math.pow(zoomProgress, 3);
-                        
-                        // Extremely large scale to zoom through the lens
-                        const scale = 1.05 + (easeInCubic * 80); 
-                        canvas.style.transform = `scale(${scale})`;
-                        canvas.style.transformOrigin = '55% 50%';
-                        
-                        // Fade out the wrap to reveal the next section zooming out
+                        const scale = 1.05 + (easeInCubic * 80);
+                        canvasEl.style.transform = `scale(${scale})`;
+                        canvasEl.style.transformOrigin = '55% 50%';
+
                         let fadeProgress = 0;
-                        const fadeStart = 0.3; // start fading a bit after zoom begins 
+                        const fadeStart = 0.3;
                         if (zoomProgress > fadeStart) {
                              fadeProgress = (zoomProgress - fadeStart) / (1 - fadeStart);
                         }
@@ -1149,7 +1185,6 @@
                         section.style.background = `rgba(0,0,0, ${Math.max(0, 1 - fadeProgress)})`;
                         section.style.pointerEvents = (zoomProgress >= 0.75) ? 'none' : '';
 
-                        // Sport section zoom out effect (from 2.5 scale down to 1.0)
                         if (sportSection) {
                             if (zoomProgress >= 0.75) {
                                 sportSection.style.transform = '';
@@ -1165,8 +1200,8 @@
                             }
                         }
                     } else {
-                        canvas.style.transform = `scale(1.05)`;
-                        canvas.style.opacity = 1;
+                        canvasEl.style.transform = `scale(1.05)`;
+                        canvasEl.style.opacity = 1;
                         wrap.style.opacity = 1;
                         section.style.background = '#000';
                         section.style.pointerEvents = '';
@@ -1176,10 +1211,8 @@
                         }
                     }
 
-                    // Freeze #rest-of-site vertically so it doesn't slide up during overlap
                     if (restOfSite) {
                         if (zoomProgress >= 1) {
-                            // Clear transform entirely so position:sticky works on child sections
                             restOfSite.style.transform = '';
                         } else if (zoomProgress <= 0) {
                             restOfSite.style.transform = `translateY(${-transitionPhaseLength}px)`;
@@ -1261,6 +1294,12 @@
                         drawFrame(frames[0]);
                     }
 
+                    // Only apply negative margin for desktop zoom transition
+                    if (!isMobile) {
+                        const restOfSite = document.getElementById('rest-of-site');
+                        if (restOfSite) restOfSite.style.marginTop = '-100vh';
+                    }
+
                     window.addEventListener('scroll', onScroll, { passive: true });
                     window.addEventListener('resize', resizeCanvas);
 
@@ -1308,11 +1347,13 @@
         (function () {
             'use strict';
 
+            const isMobileDevice = window.innerWidth <= 768 || 'ontouchstart' in window;
             const lenis = new Lenis({
                 duration: 1.0,
                 easing: function (t) { return Math.min(1, 1.001 - Math.pow(2, -10 * t)); },
                 smoothWheel: true,
-                touchMultiplier: 1.2
+                smoothTouch: false,
+                touchMultiplier: isMobileDevice ? 1.0 : 1.2
             });
 
             // Standalone RAF loop (no GSAP)
