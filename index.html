@@ -4,12 +4,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SMILEVSKI PRODUCTION</title>
+    <title>Smilevski Production — Професионална Фотографија и Видео</title>
     <link rel="icon" type="image/png" href="logo.png">
-    <meta name="description" content="Професионална фотографија и видео продукција - Smilevski Production">
+    <meta name="description" content="Smilevski Production — професионална фотографија и видео продукција во Македонија. Настани, свадби, спорт, промоции и портрет фотографија.">
+    <meta name="keywords" content="фотографија Македонија, видео продукција, свадбена фотографија, спортска фотографија, настани, Smilevski Production">
+    <meta name="author" content="Smilevski Production">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://smilevskiproduction.com/">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://smilevskiproduction.com/">
+    <meta property="og:title" content="Smilevski Production — Професионална Фотографија и Видео">
+    <meta property="og:description" content="Професионална фотографија и видео продукција во Македонија. Настани, свадби, спорт, промоции и портрет фотографија.">
+    <meta property="og:image" content="https://smilevskiproduction.com/logo.png">
+    <meta property="og:locale" content="mk_MK">
+    <meta property="og:site_name" content="Smilevski Production">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Smilevski Production — Професионална Фотографија и Видео">
+    <meta name="twitter:description" content="Професионална фотографија и видео продукција во Македонија.">
+    <meta name="twitter:image" content="https://smilevskiproduction.com/logo.png">
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": "Smilevski Production",
+      "description": "Професионална фотографија и видео продукција во Македонија",
+      "url": "https://smilevskiproduction.com",
+      "logo": "https://smilevskiproduction.com/logo.png",
+      "image": "https://smilevskiproduction.com/logo.png",
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "MK"
+      },
+      "sameAs": [
+        "https://www.instagram.com/smilevski.production"
+      ],
+      "serviceType": ["Photography", "Video Production", "Event Photography", "Sports Photography", "Wedding Photography"]
+    }
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&family=Unbounded:wght@400;700;800;900&display=swap"
+    <link
+        href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&family=Unbounded:wght@400;700;800;900&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@3.2.2/dist/css/splide-core.min.css">
     <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@3.2.2/dist/js/splide.min.js" defer></script>
@@ -300,17 +341,28 @@
             top: 16px;
         }
 
-        /* ===== STICKY HERO OVERLAY ===== */
+        /* ===== HERO ===== */
         .hero {
-            position: sticky;
-            top: 0;
-            z-index: 1;
+            position: relative;
             height: 100vh;
             height: 100dvh;
             display: flex;
             flex-direction: column;
             overflow: hidden;
             background: #000;
+        }
+
+        /* ===== HERO BACKGROUND VIDEO ===== */
+        #mobile-hero-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transform: scale(1.05);
+            z-index: 0;
+            opacity: 0.65;
         }
 
         .hero>section:last-child {
@@ -384,53 +436,11 @@
         }
 
         .sticky-section {
-            position: sticky;
-            top: 0;
-            height: 100vh;
-            height: 100dvh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            background: #000;
-            box-shadow: 0 -20px 50px rgba(0, 0, 0, 0.5);
-            overflow: hidden;
-        }
-
-
-        /* ===== SCROLL ANIMATION ===== */
-        .scroll-animation {
             position: relative;
-            height: 800vh;
-        }
-
-        .scroll-canvas-wrap {
-            position: sticky;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100vh;
-            height: 100dvh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            background: #000;
             overflow: hidden;
         }
 
-        #scroll-canvas {
-            border-radius: 16px;
-            max-width: calc(100% - 32px);
-            max-height: calc(100vh - 80px);
-            /* Crop PixVerse watermark */
-            transform: scale(1.05);
-            clip-path: inset(0 round 16px);
-        }
-
-
-        @media (min-width: 769px) and (max-width: 1024px) {
-            .scroll-animation {
-                height: 700vh;
-            }
-        }
 
         /* ===== SCROLL PROGRESS BAR ===== */
         #scroll-progress {
@@ -535,6 +545,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
+            object-position: center calc(50% - 2.0cm);
         }
 
         .carousel-card__overlay {
@@ -592,53 +603,6 @@
             overflow: hidden;
         }
 
-        /* ===== MOBILE OVERRIDES ===== */
-        @media (max-width: 768px) {
-            .hero {
-                position: relative;
-            }
-
-            .scroll-canvas-wrap {
-                position: relative !important;
-                height: 100svh !important;
-            }
-
-            .sticky-section {
-                position: relative;
-                height: auto;
-                min-height: 0;
-            }
-
-            /* Hide desktop spacer divs */
-            .mobile-spacer-hide {
-                display: none !important;
-            }
-
-            /* Option B: Scroll animation is not needed on mobile since the video is natively in the hero */
-            .scroll-animation {
-                display: none !important;
-            }
-
-            /* Hide scroll canvas entirely on mobile */
-            #scroll-canvas {
-                display: none !important;
-            }
-
-            /* Show mobile auto-play video inside the hero */
-            #mobile-hero-video {
-                display: block !important;
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-                transform: scale(1.05); /* crop watermark */
-                z-index: 0;
-                opacity: 0.65; /* darken video so text pops */
-            }
-        }
-
         /* ===== SECTION DIVIDER ===== */
         .section-accent {
             width: 50px;
@@ -669,6 +633,7 @@
             object-fit: cover;
             z-index: 0;
         }
+
         #cta .max-w-2xl {
             position: relative;
             z-index: 1;
@@ -745,6 +710,64 @@
         ::-webkit-scrollbar-thumb:hover {
             background: #FF7800;
         }
+
+        /* LIGHTBOX */
+        #lightbox {
+            position: fixed; inset: 0; z-index: 100000;
+            background: rgba(0,0,0,0.96);
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.25s ease;
+        }
+        #lightbox.lb-open { opacity: 1; pointer-events: auto; }
+        #lb-img-wrap {
+            flex: 1; display: flex; align-items: center; justify-content: center;
+            width: 100%; padding: 60px 100px 0;
+            overflow: hidden;
+        }
+        #lb-img { max-width: 100%; max-height: calc(100dvh - 130px); object-fit: contain; border-radius: 0.5rem; }
+        #lb-banner {
+            width: 100%; flex-shrink: 0;
+            display: flex; align-items: center; gap: 16px;
+            padding: 0 24px;
+            padding-bottom: env(safe-area-inset-bottom, 0px);
+            border-top: 1px solid rgba(255,255,255,0.06);
+            min-height: 64px;
+        }
+        #lb-label {
+            font-family: 'Lora', serif; font-size: 11px; letter-spacing: 3px;
+            text-transform: uppercase; opacity: 0.45; color: #fff;
+        }
+        #lb-num {
+            font-family: 'Unbounded', sans-serif; font-size: 12px; font-weight: 700; color: #FF7800;
+        }
+        #lb-title { font-family: 'Lora', serif; font-size: 14px; font-weight: 500; opacity: 0.85; color: #fff; flex: 1; }
+        #lb-counter {
+            font-family: 'Unbounded', sans-serif; font-size: 11px; font-weight: 400;
+            opacity: 0.3; color: #fff; white-space: nowrap; margin-left: auto;
+        }
+        #lb-close {
+            position: absolute; top: 12px; right: 12px;
+            background: rgba(255,255,255,0.08); border: none; color: #fff; cursor: pointer;
+            width: 44px; height: 44px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 18px; opacity: 0.7; transition: opacity 0.2s, background 0.2s;
+        }
+        #lb-close:hover { opacity: 1; background: rgba(255,120,0,0.25); color: #FF7800; }
+        #lb-prev, #lb-next {
+            position: absolute; top: 50%; transform: translateY(-50%);
+            background: none; border: none; color: #fff; cursor: pointer;
+            font-size: 52px; line-height: 1; opacity: 0.3; transition: opacity 0.2s;
+            padding: 8px 20px; user-select: none;
+        }
+        #lb-prev { left: 0; }
+        #lb-next { right: 0; }
+        #lb-prev:hover, #lb-next:hover { opacity: 0.9; }
+        @media (max-width: 768px) {
+            #lb-img-wrap { padding: 68px 56px 0; }
+            #lb-img { max-height: calc(100dvh - 140px - env(safe-area-inset-bottom, 0px)); border-radius: 0.35rem; }
+            #lb-prev, #lb-next { font-size: 36px; padding: 8px 12px; opacity: 0.5; }
+        }
     </style>
 </head>
 
@@ -790,10 +813,10 @@
                 <span></span>
             </button>
             <div class="nav-links" id="navLinks">
-                <a href="#sport">Спорт</a>
-                <a href="#events">Настани</a>
                 <a href="#solo">Соло</a>
+                <a href="#events">Настани</a>
                 <a href="#promo">Промоции</a>
+                <a href="#sport">Спорт</a>
                 <a href="#cta">Резервации</a>
             </div>
         </div>
@@ -801,16 +824,17 @@
 
     <main id="main-content">
 
-        <!-- ===== STICKY HERO ===== -->
+        <!-- ===== HERO ===== -->
         <header class="hero">
 
-            <!-- ===== MOBILE HERO BACKGROUND VIDEO ===== -->
-            <video id="mobile-hero-video" autoplay loop muted playsinline aria-hidden="true" style="display: none;">
+            <!-- ===== HERO BACKGROUND VIDEO ===== -->
+            <video id="mobile-hero-video" autoplay loop muted playsinline aria-hidden="true">
                 <source src="mobile-hero-boomerang.mp4" type="video/mp4">
             </video>
 
             <!-- ===== HERO TOP 1/3 — Floating Cameras ===== -->
-            <section class="relative overflow-hidden" style="height: 33.33dvh; flex-shrink: 0; background: transparent;">
+            <section class="relative overflow-hidden"
+                style="height: 33.33dvh; flex-shrink: 0; background: transparent;">
                 <!-- SVG Downward Curve -->
                 <svg class="absolute bottom-0 left-0 w-full" viewBox="0 0 1440 120" preserveAspectRatio="none"
                     style="height: 60px;">
@@ -831,45 +855,221 @@
                 <p class="font-body text-sm opacity-40 mb-6" style="letter-spacing: 2px;">Скролај за да истражиш</p>
             </section>
 
-        </header><!-- end sticky hero -->
+        </header><!-- end hero -->
 
-        <!-- ===== SCROLL-DRIVEN VIDEO ANIMATION ===== -->
-        <section class="scroll-animation content-overlay" id="scroll-video" style="z-index: 10;">
-            <div class="scroll-canvas-wrap">
-                <canvas id="scroll-canvas" role="img"
-                    aria-label="Анимација на камера контролирана со скролање"></canvas>
-            </div>
-        </section>
-
-        <!-- Wrapper for zoomed out transition -->
-        <div id="rest-of-site" style="position: relative; z-index: 5;">
-
-        <!-- ===== CATEGORY: СПОРТ ===== -->
-        <section id="sport" class="sticky-section py-20 md:py-28 px-4 md:px-8" style="z-index: 3;">
-            <div class="max-w-6xl mx-auto w-full">
-                <h3 class="font-heading text-center mb-4"
-                    style="font-size: clamp(32px, 5vw, 56px); letter-spacing: 4px;">
-                    Спорт
-                </h3>
-                <div class="section-accent"></div>
-                <div class="carousel-container">
-                    <div id="splide-sport" class="splide" aria-label="Спорт галерија">
-                        <div class="splide__track">
-                            <ul class="splide__list">
-                                <li class="splide__slide"><div class="carousel-card" tabindex="0"><div class="carousel-card__image"><img src="sport/sport-1.jpg" alt="Спорт фотографија 1"></div><div class="carousel-card__overlay"><div class="carousel-card__top"><span class="carousel-card__label">Спорт</span><span class="carousel-card__tag">01</span></div><div class="carousel-card__bottom"><span class="carousel-card__title">Фотографија</span><svg class="carousel-card__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></div></div></div></li>
-                                <li class="splide__slide"><div class="carousel-card" tabindex="0"><div class="carousel-card__image"><img src="sport/sport-2.jpg" alt="Спорт фотографија 2"></div><div class="carousel-card__overlay"><div class="carousel-card__top"><span class="carousel-card__label">Спорт</span><span class="carousel-card__tag">02</span></div><div class="carousel-card__bottom"><span class="carousel-card__title">Фотографија</span><svg class="carousel-card__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></div></div></div></li>
-                                <li class="splide__slide"><div class="carousel-card" tabindex="0"><div class="carousel-card__image"><img src="sport/sport-3.jpg" alt="Спорт фотографија 3"></div><div class="carousel-card__overlay"><div class="carousel-card__top"><span class="carousel-card__label">Спорт</span><span class="carousel-card__tag">03</span></div><div class="carousel-card__bottom"><span class="carousel-card__title">Фотографија</span><svg class="carousel-card__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></div></div></div></li>
-                                <li class="splide__slide"><div class="carousel-card" tabindex="0"><div class="carousel-card__image"><img src="sport/sport-4.jpg" alt="Спорт фотографија 4"></div><div class="carousel-card__overlay"><div class="carousel-card__top"><span class="carousel-card__label">Спорт</span><span class="carousel-card__tag">04</span></div><div class="carousel-card__bottom"><span class="carousel-card__title">Фотографија</span><svg class="carousel-card__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></div></div></div></li>
-                                <li class="splide__slide"><div class="carousel-card" tabindex="0"><div class="carousel-card__image"><img src="sport/sport-5.jpg" alt="Спорт фотографија 5"></div><div class="carousel-card__overlay"><div class="carousel-card__top"><span class="carousel-card__label">Спорт</span><span class="carousel-card__tag">05</span></div><div class="carousel-card__bottom"><span class="carousel-card__title">Фотографија</span><svg class="carousel-card__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></div></div></div></li>
-                                <li class="splide__slide"><div class="carousel-card" tabindex="0"><div class="carousel-card__image"><img src="sport/sport-6.jpg" alt="Спорт фотографија 6"></div><div class="carousel-card__overlay"><div class="carousel-card__top"><span class="carousel-card__label">Спорт</span><span class="carousel-card__tag">06</span></div><div class="carousel-card__bottom"><span class="carousel-card__title">Фотографија</span><svg class="carousel-card__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></div></div></div></li>
-                                <li class="splide__slide"><div class="carousel-card" tabindex="0"><div class="carousel-card__image"><img src="sport/sport-7.jpg" alt="Спорт фотографија 7"></div><div class="carousel-card__overlay"><div class="carousel-card__top"><span class="carousel-card__label">Спорт</span><span class="carousel-card__tag">07</span></div><div class="carousel-card__bottom"><span class="carousel-card__title">Фотографија</span><svg class="carousel-card__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></div></div></div></li>
-                            </ul>
-                        </div>
-                    </div>
+        <!-- ===== WHAT WE OFFER ===== -->
+        <section id="what-we-offer" class="py-20 md:py-28 px-4 md:px-8" style="position: relative; z-index: 2;">
+            <div class="fade-section max-w-6xl mx-auto w-full flex flex-col md:flex-row items-center gap-12 md:gap-16">
+                <!-- Text Content -->
+                <div class="w-full md:w-1/2 text-center md:text-left">
+                    <h3 class="font-heading mb-4" style="font-size: clamp(32px, 5vw, 56px); letter-spacing: 4px;">
+                        Што Нудиме
+                    </h3>
+                    <div class="section-accent mb-10 mx-auto md:ml-0 md:mr-auto"></div>
+                    <p class="font-body text-lg md:text-xl mb-6 opacity-80 leading-relaxed" style="color: #e5e5e5;">
+                        Во Smilevski Production нудиме професионални фотографски и видео услуги кои го доловуваат секој
+                        значаен момент со креативност и прецизност. Специјализирани сме за свадби, настани, корпоративни
+                        снимања и индивидуални фотосесии, при што секој проект го третираме со внимание кон деталите и
+                        уникатен пристап.
+                    </p>
+                    <p class="font-body text-lg md:text-xl opacity-80 leading-relaxed" style="color: #e5e5e5;">
+                        Нашиот тим користи современа опрема и напредни техники за обработка со цел да обезбеди висок
+                        квалитет на финалниот производ. Без разлика дали станува збор за лични спомени или деловна
+                        презентација, ние создаваме визуелна приказна што остава траен впечаток.
+                    </p>
+                </div>
+                <!-- Image -->
+                <div class="w-full md:w-1/2 flex justify-center md:justify-end">
+                    <img src="gimbal.png" alt="Опрема"
+                        class="w-full max-w-md object-contain drop-shadow-xl hover:scale-105 transition-transform duration-500">
                 </div>
             </div>
         </section>
 
+        <!-- ===== LIVE STREAM ===== -->
+        <section id="live-stream" class="py-20 md:py-28 px-4 md:px-8" style="position: relative; z-index: 2;">
+            <div
+                class="fade-section max-w-6xl mx-auto w-full flex flex-col md:flex-row-reverse items-center gap-12 md:gap-16">
+                <!-- Text Content -->
+                <div class="w-full md:w-1/2 text-center md:text-left">
+                    <h3 class="font-heading mb-4 uppercase"
+                        style="font-size: clamp(32px, 5vw, 56px); letter-spacing: 4px;">
+                        Live Stream
+                    </h3>
+                    <div class="section-accent mb-10 mx-auto md:ml-0 md:mr-auto"></div>
+                    <p class="font-body text-lg md:text-xl opacity-80 leading-relaxed" style="color: #e5e5e5;">
+                        Smilevski Production посветено работи на секој проект, обезбедувајќи целосна техничка поддршка и
+                        беспрекорна реализација на live-stream процесот. Нивниот пристап се базира на сигурност,
+                        иновативност и професионализам, што резултира со преноси кои оставаат силен впечаток и ја
+                        зголемуваат видливоста на секој настан.
+                    </p>
+                </div>
+                <!-- Image -->
+                <div class="w-full md:w-1/2 flex justify-center md:justify-start">
+                    <img src="videocamera.png" alt="Live Stream Опрема"
+                        class="w-full max-w-md object-contain drop-shadow-xl hover:scale-105 transition-transform duration-500">
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== CATEGORY: ФОТОСЕСИИ ===== -->
+        <section id="solo" class="sticky-section py-20 md:py-28 px-4 md:px-8" style="z-index: 3;">
+            <div class="fade-section max-w-6xl mx-auto w-full">
+                <h3 class="font-heading text-center mb-4"
+                    style="font-size: clamp(32px, 5vw, 56px); letter-spacing: 4px;">
+                    Фотосесии
+                </h3>
+                <div class="section-accent"></div>
+                <div class="carousel-container">
+                    <div id="splide-solo" class="splide" aria-label="Соло слики галерија">
+                        <div class="splide__track">
+                            <ul class="splide__list">
+                                <li class="splide__slide">
+                                    <div class="carousel-card" tabindex="0">
+                                        <div class="carousel-card__image"><img src="sliki/sliki-1.jpg"
+                                                alt="Соло слика 1" loading="lazy"></div>
+                                        <div class="carousel-card__overlay">
+                                            <div class="carousel-card__top"><span
+                                                    class="carousel-card__label">Соло</span><span
+                                                    class="carousel-card__tag">01</span></div>
+                                            <div class="carousel-card__bottom"><span
+                                                    class="carousel-card__title">Фотографија</span><svg
+                                                    class="carousel-card__arrow" viewBox="0 0 24 24" fill="none"
+                                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                    stroke-linejoin="round">
+                                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                                    <polyline points="12 5 19 12 12 19"></polyline>
+                                                </svg></div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="splide__slide">
+                                    <div class="carousel-card" tabindex="0">
+                                        <div class="carousel-card__image"><img src="sliki/sliki-2.jpg"
+                                                alt="Соло слика 2" loading="lazy"></div>
+                                        <div class="carousel-card__overlay">
+                                            <div class="carousel-card__top"><span
+                                                    class="carousel-card__label">Соло</span><span
+                                                    class="carousel-card__tag">02</span></div>
+                                            <div class="carousel-card__bottom"><span
+                                                    class="carousel-card__title">Фотографија</span><svg
+                                                    class="carousel-card__arrow" viewBox="0 0 24 24" fill="none"
+                                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                    stroke-linejoin="round">
+                                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                                    <polyline points="12 5 19 12 12 19"></polyline>
+                                                </svg></div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="splide__slide">
+                                    <div class="carousel-card" tabindex="0">
+                                        <div class="carousel-card__image"><img src="sliki/sliki-3.jpg"
+                                                alt="Соло слика 3" loading="lazy"></div>
+                                        <div class="carousel-card__overlay">
+                                            <div class="carousel-card__top"><span
+                                                    class="carousel-card__label">Соло</span><span
+                                                    class="carousel-card__tag">03</span></div>
+                                            <div class="carousel-card__bottom"><span
+                                                    class="carousel-card__title">Фотографија</span><svg
+                                                    class="carousel-card__arrow" viewBox="0 0 24 24" fill="none"
+                                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                    stroke-linejoin="round">
+                                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                                    <polyline points="12 5 19 12 12 19"></polyline>
+                                                </svg></div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="splide__slide">
+                                    <div class="carousel-card" tabindex="0">
+                                        <div class="carousel-card__image"><img src="sliki/sliki-4.jpg"
+                                                alt="Соло слика 4" loading="lazy"></div>
+                                        <div class="carousel-card__overlay">
+                                            <div class="carousel-card__top"><span
+                                                    class="carousel-card__label">Соло</span><span
+                                                    class="carousel-card__tag">04</span></div>
+                                            <div class="carousel-card__bottom"><span
+                                                    class="carousel-card__title">Фотографија</span><svg
+                                                    class="carousel-card__arrow" viewBox="0 0 24 24" fill="none"
+                                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                    stroke-linejoin="round">
+                                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                                    <polyline points="12 5 19 12 12 19"></polyline>
+                                                </svg></div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="splide__slide">
+                                    <div class="carousel-card" tabindex="0">
+                                        <div class="carousel-card__image"><img src="sliki/sliki-5.jpg"
+                                                alt="Соло слика 5" loading="lazy"></div>
+                                        <div class="carousel-card__overlay">
+                                            <div class="carousel-card__top"><span
+                                                    class="carousel-card__label">Соло</span><span
+                                                    class="carousel-card__tag">05</span></div>
+                                            <div class="carousel-card__bottom"><span
+                                                    class="carousel-card__title">Фотографија</span><svg
+                                                    class="carousel-card__arrow" viewBox="0 0 24 24" fill="none"
+                                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                    stroke-linejoin="round">
+                                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                                    <polyline points="12 5 19 12 12 19"></polyline>
+                                                </svg></div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="splide__slide">
+                                    <div class="carousel-card" tabindex="0">
+                                        <div class="carousel-card__image"><img src="sliki/sliki-6.jpg"
+                                                alt="Соло слика 6" loading="lazy"></div>
+                                        <div class="carousel-card__overlay">
+                                            <div class="carousel-card__top"><span
+                                                    class="carousel-card__label">Соло</span><span
+                                                    class="carousel-card__tag">06</span></div>
+                                            <div class="carousel-card__bottom"><span
+                                                    class="carousel-card__title">Фотографија</span><svg
+                                                    class="carousel-card__arrow" viewBox="0 0 24 24" fill="none"
+                                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                    stroke-linejoin="round">
+                                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                                    <polyline points="12 5 19 12 12 19"></polyline>
+                                                </svg></div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="splide__slide">
+                                    <div class="carousel-card" tabindex="0">
+                                        <div class="carousel-card__image"><img src="sliki/sliki-7.jpg"
+                                                alt="Соло слика 7" loading="lazy"></div>
+                                        <div class="carousel-card__overlay">
+                                            <div class="carousel-card__top"><span
+                                                    class="carousel-card__label">Соло</span><span
+                                                    class="carousel-card__tag">07</span></div>
+                                            <div class="carousel-card__bottom"><span
+                                                    class="carousel-card__title">Фотографија</span><svg
+                                                    class="carousel-card__arrow" viewBox="0 0 24 24" fill="none"
+                                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                    stroke-linejoin="round">
+                                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                                    <polyline points="12 5 19 12 12 19"></polyline>
+                                                </svg></div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-4 flex justify-end pr-4 md:pr-0">
+                    <a href="galerija-solo.html"
+                        class="font-body text-sm text-white hover:text-[#FF7800] transition-colors"
+                        style="text-decoration: underline; text-underline-offset: 4px;">
+                        View all
+                    </a>
+                </div>
+            </div>
+        </section>
         <!-- ===== CATEGORY: НАСТАНИ ===== -->
         <section id="events" class="sticky-section py-20 md:py-28 px-4 md:px-8" style="z-index: 4;">
             <div class="fade-section max-w-6xl mx-auto w-full">
@@ -882,49 +1082,154 @@
                     <div id="splide-events" class="splide" aria-label="Настани галерија">
                         <div class="splide__track">
                             <ul class="splide__list">
-                                <li class="splide__slide"><div class="carousel-card" tabindex="0"><div class="carousel-card__image"><img src="nastani/nastani-1.jpg" alt="Настани фотографија 1"></div><div class="carousel-card__overlay"><div class="carousel-card__top"><span class="carousel-card__label">Настани</span><span class="carousel-card__tag">01</span></div><div class="carousel-card__bottom"><span class="carousel-card__title">Фотографија</span><svg class="carousel-card__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></div></div></div></li>
-                                <li class="splide__slide"><div class="carousel-card" tabindex="0"><div class="carousel-card__image"><img src="nastani/nastani-2.jpg" alt="Настани фотографија 2"></div><div class="carousel-card__overlay"><div class="carousel-card__top"><span class="carousel-card__label">Настани</span><span class="carousel-card__tag">02</span></div><div class="carousel-card__bottom"><span class="carousel-card__title">Фотографија</span><svg class="carousel-card__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></div></div></div></li>
-                                <li class="splide__slide"><div class="carousel-card" tabindex="0"><div class="carousel-card__image"><img src="nastani/nastani-3.jpg" alt="Настани фотографија 3"></div><div class="carousel-card__overlay"><div class="carousel-card__top"><span class="carousel-card__label">Настани</span><span class="carousel-card__tag">03</span></div><div class="carousel-card__bottom"><span class="carousel-card__title">Фотографија</span><svg class="carousel-card__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></div></div></div></li>
-                                <li class="splide__slide"><div class="carousel-card" tabindex="0"><div class="carousel-card__image"><img src="nastani/nastani-4.jpg" alt="Настани фотографија 4"></div><div class="carousel-card__overlay"><div class="carousel-card__top"><span class="carousel-card__label">Настани</span><span class="carousel-card__tag">04</span></div><div class="carousel-card__bottom"><span class="carousel-card__title">Фотографија</span><svg class="carousel-card__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></div></div></div></li>
-                                <li class="splide__slide"><div class="carousel-card" tabindex="0"><div class="carousel-card__image"><img src="krstevka.jpg" alt="Настани фотографија 5"></div><div class="carousel-card__overlay"><div class="carousel-card__top"><span class="carousel-card__label">Настани</span><span class="carousel-card__tag">05</span></div><div class="carousel-card__bottom"><span class="carousel-card__title">Фотографија</span><svg class="carousel-card__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></div></div></div></li>
-                                <li class="splide__slide"><div class="carousel-card" tabindex="0"><div class="carousel-card__image"><img src="krstevka1.jpg" alt="Настани фотографија 6"></div><div class="carousel-card__overlay"><div class="carousel-card__top"><span class="carousel-card__label">Настани</span><span class="carousel-card__tag">06</span></div><div class="carousel-card__bottom"><span class="carousel-card__title">Фотографија</span><svg class="carousel-card__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></div></div></div></li>
+                                <li class="splide__slide">
+                                    <div class="carousel-card" tabindex="0">
+                                        <div class="carousel-card__image"><img src="nastani/nastani-1.jpg"
+                                                alt="Настани фотографија 1" style="object-position: center calc(50% - 1.6cm);" loading="lazy"></div>
+                                        <div class="carousel-card__overlay">
+                                            <div class="carousel-card__top"><span
+                                                    class="carousel-card__label">Настани</span><span
+                                                    class="carousel-card__tag">01</span></div>
+                                            <div class="carousel-card__bottom"><span
+                                                    class="carousel-card__title">Фотографија</span><svg
+                                                    class="carousel-card__arrow" viewBox="0 0 24 24" fill="none"
+                                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                    stroke-linejoin="round">
+                                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                                    <polyline points="12 5 19 12 12 19"></polyline>
+                                                </svg></div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="splide__slide">
+                                    <div class="carousel-card" tabindex="0">
+                                        <div class="carousel-card__image"><img src="nastani/nastani-2.jpg"
+                                                alt="Настани фотографија 2" loading="lazy"></div>
+                                        <div class="carousel-card__overlay">
+                                            <div class="carousel-card__top"><span
+                                                    class="carousel-card__label">Настани</span><span
+                                                    class="carousel-card__tag">02</span></div>
+                                            <div class="carousel-card__bottom"><span
+                                                    class="carousel-card__title">Фотографија</span><svg
+                                                    class="carousel-card__arrow" viewBox="0 0 24 24" fill="none"
+                                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                    stroke-linejoin="round">
+                                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                                    <polyline points="12 5 19 12 12 19"></polyline>
+                                                </svg></div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="splide__slide">
+                                    <div class="carousel-card" tabindex="0">
+                                        <div class="carousel-card__image"><img src="nastani/nastani-3.jpg"
+                                                alt="Настани фотографија 3" loading="lazy"></div>
+                                        <div class="carousel-card__overlay">
+                                            <div class="carousel-card__top"><span
+                                                    class="carousel-card__label">Настани</span><span
+                                                    class="carousel-card__tag">03</span></div>
+                                            <div class="carousel-card__bottom"><span
+                                                    class="carousel-card__title">Фотографија</span><svg
+                                                    class="carousel-card__arrow" viewBox="0 0 24 24" fill="none"
+                                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                    stroke-linejoin="round">
+                                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                                    <polyline points="12 5 19 12 12 19"></polyline>
+                                                </svg></div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="splide__slide">
+                                    <div class="carousel-card" tabindex="0">
+                                        <div class="carousel-card__image"><img src="nastani/nastani-4.jpg"
+                                                alt="Настани фотографија 4" loading="lazy"></div>
+                                        <div class="carousel-card__overlay">
+                                            <div class="carousel-card__top"><span
+                                                    class="carousel-card__label">Настани</span><span
+                                                    class="carousel-card__tag">04</span></div>
+                                            <div class="carousel-card__bottom"><span
+                                                    class="carousel-card__title">Фотографија</span><svg
+                                                    class="carousel-card__arrow" viewBox="0 0 24 24" fill="none"
+                                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                    stroke-linejoin="round">
+                                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                                    <polyline points="12 5 19 12 12 19"></polyline>
+                                                </svg></div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="splide__slide">
+                                    <div class="carousel-card" tabindex="0">
+                                        <div class="carousel-card__image"><img src="nastani/nastani-5.jpg"
+                                                alt="Настани фотографија 5" style="object-position: center calc(50% - 1.6cm);" loading="lazy"></div>
+                                        <div class="carousel-card__overlay">
+                                            <div class="carousel-card__top"><span
+                                                    class="carousel-card__label">Настани</span><span
+                                                    class="carousel-card__tag">05</span></div>
+                                            <div class="carousel-card__bottom"><span
+                                                    class="carousel-card__title">Фотографија</span><svg
+                                                    class="carousel-card__arrow" viewBox="0 0 24 24" fill="none"
+                                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                    stroke-linejoin="round">
+                                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                                    <polyline points="12 5 19 12 12 19"></polyline>
+                                                </svg></div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="splide__slide">
+                                    <div class="carousel-card" tabindex="0">
+                                        <div class="carousel-card__image"><img src="nastani/nastani-6.jpg"
+                                                alt="Настани фотографија 6" loading="lazy"></div>
+                                        <div class="carousel-card__overlay">
+                                            <div class="carousel-card__top"><span
+                                                    class="carousel-card__label">Настани</span><span
+                                                    class="carousel-card__tag">06</span></div>
+                                            <div class="carousel-card__bottom"><span
+                                                    class="carousel-card__title">Фотографија</span><svg
+                                                    class="carousel-card__arrow" viewBox="0 0 24 24" fill="none"
+                                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                    stroke-linejoin="round">
+                                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                                    <polyline points="12 5 19 12 12 19"></polyline>
+                                                </svg></div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="splide__slide">
+                                    <div class="carousel-card" tabindex="0">
+                                        <div class="carousel-card__image"><img src="nastani/nastani-7.jpg"
+                                                alt="Настани фотографија 7" loading="lazy"></div>
+                                        <div class="carousel-card__overlay">
+                                            <div class="carousel-card__top"><span
+                                                    class="carousel-card__label">Настани</span><span
+                                                    class="carousel-card__tag">07</span></div>
+                                            <div class="carousel-card__bottom"><span
+                                                    class="carousel-card__title">Фотографија</span><svg
+                                                    class="carousel-card__arrow" viewBox="0 0 24 24" fill="none"
+                                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                    stroke-linejoin="round">
+                                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                                    <polyline points="12 5 19 12 12 19"></polyline>
+                                                </svg></div>
+                                        </div>
+                                    </div>
+                                </li>
                             </ul>
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
-        <div class="mobile-spacer-hide" style="height: 40vh;" aria-hidden="true"></div>
-
-        <!-- ===== CATEGORY: СОЛО СЛИКИ ===== -->
-        <section id="solo" class="sticky-section py-20 md:py-28 px-4 md:px-8" style="z-index: 5;">
-            <div class="fade-section max-w-6xl mx-auto w-full">
-                <h3 class="font-heading text-center mb-4"
-                    style="font-size: clamp(32px, 5vw, 56px); letter-spacing: 4px;">
-                    Соло слики
-                </h3>
-                <div class="section-accent"></div>
-                <div class="carousel-container">
-                    <div id="splide-solo" class="splide" aria-label="Соло слики галерија">
-                        <div class="splide__track">
-                            <ul class="splide__list">
-                                <li class="splide__slide"><div class="carousel-card" tabindex="0"><div class="carousel-card__image"><img src="sliki/sliki-1.jpg" alt="Соло слика 1"></div><div class="carousel-card__overlay"><div class="carousel-card__top"><span class="carousel-card__label">Соло</span><span class="carousel-card__tag">01</span></div><div class="carousel-card__bottom"><span class="carousel-card__title">Фотографија</span><svg class="carousel-card__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></div></div></div></li>
-                                <li class="splide__slide"><div class="carousel-card" tabindex="0"><div class="carousel-card__image"><img src="sliki/sliki-2.jpg" alt="Соло слика 2"></div><div class="carousel-card__overlay"><div class="carousel-card__top"><span class="carousel-card__label">Соло</span><span class="carousel-card__tag">02</span></div><div class="carousel-card__bottom"><span class="carousel-card__title">Фотографија</span><svg class="carousel-card__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></div></div></div></li>
-                                <li class="splide__slide"><div class="carousel-card" tabindex="0"><div class="carousel-card__image"><img src="sliki/sliki-3.jpg" alt="Соло слика 3"></div><div class="carousel-card__overlay"><div class="carousel-card__top"><span class="carousel-card__label">Соло</span><span class="carousel-card__tag">03</span></div><div class="carousel-card__bottom"><span class="carousel-card__title">Фотографија</span><svg class="carousel-card__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></div></div></div></li>
-                                <li class="splide__slide"><div class="carousel-card" tabindex="0"><div class="carousel-card__image"><img src="sliki/sliki-4.jpg" alt="Соло слика 4"></div><div class="carousel-card__overlay"><div class="carousel-card__top"><span class="carousel-card__label">Соло</span><span class="carousel-card__tag">04</span></div><div class="carousel-card__bottom"><span class="carousel-card__title">Фотографија</span><svg class="carousel-card__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></div></div></div></li>
-                                <li class="splide__slide"><div class="carousel-card" tabindex="0"><div class="carousel-card__image"><img src="sliki/sliki-5.jpg" alt="Соло слика 5"></div><div class="carousel-card__overlay"><div class="carousel-card__top"><span class="carousel-card__label">Соло</span><span class="carousel-card__tag">05</span></div><div class="carousel-card__bottom"><span class="carousel-card__title">Фотографија</span><svg class="carousel-card__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></div></div></div></li>
-                                <li class="splide__slide"><div class="carousel-card" tabindex="0"><div class="carousel-card__image"><img src="sliki/sliki-6.jpg" alt="Соло слика 6"></div><div class="carousel-card__overlay"><div class="carousel-card__top"><span class="carousel-card__label">Соло</span><span class="carousel-card__tag">06</span></div><div class="carousel-card__bottom"><span class="carousel-card__title">Фотографија</span><svg class="carousel-card__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></div></div></div></li>
-                                <li class="splide__slide"><div class="carousel-card" tabindex="0"><div class="carousel-card__image"><img src="sliki/sliki-7.jpg" alt="Соло слика 7"></div><div class="carousel-card__overlay"><div class="carousel-card__top"><span class="carousel-card__label">Соло</span><span class="carousel-card__tag">07</span></div><div class="carousel-card__bottom"><span class="carousel-card__title">Фотографија</span><svg class="carousel-card__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></div></div></div></li>
-                            </ul>
-                        </div>
-                    </div>
+                <div class="mt-4 flex justify-end pr-4 md:pr-0">
+                    <a href="galerija-nastani.html"
+                        class="font-body text-sm text-white hover:text-[#FF7800] transition-colors"
+                        style="text-decoration: underline; text-underline-offset: 4px;">
+                        View all
+                    </a>
                 </div>
             </div>
         </section>
-        <div class="mobile-spacer-hide" style="height: 60vh;" aria-hidden="true"></div>
-
         <!-- ===== CATEGORY: ПРОМОЦИИ ===== -->
-        <section id="promo" class="sticky-section py-20 md:py-28 px-4 md:px-8" style="z-index: 6;">
+        <section id="promo" class="sticky-section py-20 md:py-28 px-4 md:px-8" style="z-index: 5;">
             <div class="fade-section max-w-6xl mx-auto w-full">
                 <h3 class="font-heading text-center mb-4"
                     style="font-size: clamp(32px, 5vw, 56px); letter-spacing: 4px;">
@@ -935,25 +1240,313 @@
                     <div id="splide-promo" class="splide" aria-label="Промоции галерија">
                         <div class="splide__track">
                             <ul class="splide__list">
-                                <li class="splide__slide"><div class="carousel-card" tabindex="0"><div class="carousel-card__image"><img src="promocija/promo-1.jpg" alt="Промоција фотографија 1"></div><div class="carousel-card__overlay"><div class="carousel-card__top"><span class="carousel-card__label">Промо</span><span class="carousel-card__tag">01</span></div><div class="carousel-card__bottom"><span class="carousel-card__title">Фотографија</span><svg class="carousel-card__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></div></div></div></li>
-                                <li class="splide__slide"><div class="carousel-card" tabindex="0"><div class="carousel-card__image"><img src="promocija/promo-2.jpg" alt="Промоција фотографија 2"></div><div class="carousel-card__overlay"><div class="carousel-card__top"><span class="carousel-card__label">Промо</span><span class="carousel-card__tag">02</span></div><div class="carousel-card__bottom"><span class="carousel-card__title">Фотографија</span><svg class="carousel-card__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></div></div></div></li>
-                                <li class="splide__slide"><div class="carousel-card" tabindex="0"><div class="carousel-card__image"><img src="promocija/promo-3.jpg" alt="Промоција фотографија 3"></div><div class="carousel-card__overlay"><div class="carousel-card__top"><span class="carousel-card__label">Промо</span><span class="carousel-card__tag">03</span></div><div class="carousel-card__bottom"><span class="carousel-card__title">Фотографија</span><svg class="carousel-card__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></div></div></div></li>
-                                <li class="splide__slide"><div class="carousel-card" tabindex="0"><div class="carousel-card__image"><img src="promocija/promo-4.webp" alt="Промоција фотографија 4"></div><div class="carousel-card__overlay"><div class="carousel-card__top"><span class="carousel-card__label">Промо</span><span class="carousel-card__tag">04</span></div><div class="carousel-card__bottom"><span class="carousel-card__title">Фотографија</span><svg class="carousel-card__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></div></div></div></li>
-                                <li class="splide__slide"><div class="carousel-card" tabindex="0"><div class="carousel-card__image"><img src="promocija/promo-5.jpg" alt="Промоција фотографија 5"></div><div class="carousel-card__overlay"><div class="carousel-card__top"><span class="carousel-card__label">Промо</span><span class="carousel-card__tag">05</span></div><div class="carousel-card__bottom"><span class="carousel-card__title">Фотографија</span><svg class="carousel-card__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></div></div></div></li>
-                                <li class="splide__slide"><div class="carousel-card" tabindex="0"><div class="carousel-card__image"><img src="promocija/promo-6.jpg" alt="Промоција фотографија 6"></div><div class="carousel-card__overlay"><div class="carousel-card__top"><span class="carousel-card__label">Промо</span><span class="carousel-card__tag">06</span></div><div class="carousel-card__bottom"><span class="carousel-card__title">Фотографија</span><svg class="carousel-card__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></div></div></div></li>
-                                <li class="splide__slide"><div class="carousel-card" tabindex="0"><div class="carousel-card__image"><img src="promocija/promo-7.jpg" alt="Промоција фотографија 7"></div><div class="carousel-card__overlay"><div class="carousel-card__top"><span class="carousel-card__label">Промо</span><span class="carousel-card__tag">07</span></div><div class="carousel-card__bottom"><span class="carousel-card__title">Фотографија</span><svg class="carousel-card__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></div></div></div></li>
+                                <li class="splide__slide">
+                                    <div class="carousel-card" tabindex="0">
+                                        <div class="carousel-card__image"><img src="promocija/promo-1.jpg"
+                                                alt="Промоција фотографија 1" loading="lazy"></div>
+                                        <div class="carousel-card__overlay">
+                                            <div class="carousel-card__top"><span
+                                                    class="carousel-card__label">Промо</span><span
+                                                    class="carousel-card__tag">01</span></div>
+                                            <div class="carousel-card__bottom"><span
+                                                    class="carousel-card__title">Фотографија</span><svg
+                                                    class="carousel-card__arrow" viewBox="0 0 24 24" fill="none"
+                                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                    stroke-linejoin="round">
+                                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                                    <polyline points="12 5 19 12 12 19"></polyline>
+                                                </svg></div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="splide__slide">
+                                    <div class="carousel-card" tabindex="0">
+                                        <div class="carousel-card__image"><img src="promocija/promo-2.jpg"
+                                                alt="Промоција фотографија 2" loading="lazy"></div>
+                                        <div class="carousel-card__overlay">
+                                            <div class="carousel-card__top"><span
+                                                    class="carousel-card__label">Промо</span><span
+                                                    class="carousel-card__tag">02</span></div>
+                                            <div class="carousel-card__bottom"><span
+                                                    class="carousel-card__title">Фотографија</span><svg
+                                                    class="carousel-card__arrow" viewBox="0 0 24 24" fill="none"
+                                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                    stroke-linejoin="round">
+                                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                                    <polyline points="12 5 19 12 12 19"></polyline>
+                                                </svg></div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="splide__slide">
+                                    <div class="carousel-card" tabindex="0">
+                                        <div class="carousel-card__image"><img src="promocija/promo-3.jpg"
+                                                alt="Промоција фотографија 3" loading="lazy"></div>
+                                        <div class="carousel-card__overlay">
+                                            <div class="carousel-card__top"><span
+                                                    class="carousel-card__label">Промо</span><span
+                                                    class="carousel-card__tag">03</span></div>
+                                            <div class="carousel-card__bottom"><span
+                                                    class="carousel-card__title">Фотографија</span><svg
+                                                    class="carousel-card__arrow" viewBox="0 0 24 24" fill="none"
+                                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                    stroke-linejoin="round">
+                                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                                    <polyline points="12 5 19 12 12 19"></polyline>
+                                                </svg></div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="splide__slide">
+                                    <div class="carousel-card" tabindex="0">
+                                        <div class="carousel-card__image"><img src="promocija/promo-4.jpg"
+                                                alt="Промоција фотографија 4" loading="lazy"></div>
+                                        <div class="carousel-card__overlay">
+                                            <div class="carousel-card__top"><span
+                                                    class="carousel-card__label">Промо</span><span
+                                                    class="carousel-card__tag">04</span></div>
+                                            <div class="carousel-card__bottom"><span
+                                                    class="carousel-card__title">Фотографија</span><svg
+                                                    class="carousel-card__arrow" viewBox="0 0 24 24" fill="none"
+                                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                    stroke-linejoin="round">
+                                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                                    <polyline points="12 5 19 12 12 19"></polyline>
+                                                </svg></div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="splide__slide">
+                                    <div class="carousel-card" tabindex="0">
+                                        <div class="carousel-card__image"><img src="promocija/promo-5.jpg"
+                                                alt="Промоција фотографија 5" loading="lazy"></div>
+                                        <div class="carousel-card__overlay">
+                                            <div class="carousel-card__top"><span
+                                                    class="carousel-card__label">Промо</span><span
+                                                    class="carousel-card__tag">05</span></div>
+                                            <div class="carousel-card__bottom"><span
+                                                    class="carousel-card__title">Фотографија</span><svg
+                                                    class="carousel-card__arrow" viewBox="0 0 24 24" fill="none"
+                                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                    stroke-linejoin="round">
+                                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                                    <polyline points="12 5 19 12 12 19"></polyline>
+                                                </svg></div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="splide__slide">
+                                    <div class="carousel-card" tabindex="0">
+                                        <div class="carousel-card__image"><img src="promocija/promo-6.jpg"
+                                                alt="Промоција фотографија 6" loading="lazy"></div>
+                                        <div class="carousel-card__overlay">
+                                            <div class="carousel-card__top"><span
+                                                    class="carousel-card__label">Промо</span><span
+                                                    class="carousel-card__tag">06</span></div>
+                                            <div class="carousel-card__bottom"><span
+                                                    class="carousel-card__title">Фотографија</span><svg
+                                                    class="carousel-card__arrow" viewBox="0 0 24 24" fill="none"
+                                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                    stroke-linejoin="round">
+                                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                                    <polyline points="12 5 19 12 12 19"></polyline>
+                                                </svg></div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="splide__slide">
+                                    <div class="carousel-card" tabindex="0">
+                                        <div class="carousel-card__image"><img src="promocija/promo-7.jpg"
+                                                alt="Промоција фотографија 7" loading="lazy"></div>
+                                        <div class="carousel-card__overlay">
+                                            <div class="carousel-card__top"><span
+                                                    class="carousel-card__label">Промо</span><span
+                                                    class="carousel-card__tag">07</span></div>
+                                            <div class="carousel-card__bottom"><span
+                                                    class="carousel-card__title">Фотографија</span><svg
+                                                    class="carousel-card__arrow" viewBox="0 0 24 24" fill="none"
+                                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                    stroke-linejoin="round">
+                                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                                    <polyline points="12 5 19 12 12 19"></polyline>
+                                                </svg></div>
+                                        </div>
+                                    </div>
+                                </li>
                             </ul>
                         </div>
                     </div>
                 </div>
+                <div class="mt-4 flex justify-end pr-4 md:pr-0">
+                    <a href="galerija-promocii.html"
+                        class="font-body text-sm text-white hover:text-[#FF7800] transition-colors"
+                        style="text-decoration: underline; text-underline-offset: 4px;">
+                        View all
+                    </a>
+                </div>
             </div>
         </section>
-        <div class="mobile-spacer-hide" style="height: 80vh;" aria-hidden="true"></div>
-
-        </div> <!-- End rest-of-site wrapper -->
-
+        <!-- ===== CATEGORY: СПОРТ ===== -->
+        <section id="sport" class="sticky-section py-20 md:py-28 px-4 md:px-8" style="z-index: 6;">
+            <div class="max-w-6xl mx-auto w-full">
+                <h3 class="font-heading text-center mb-4"
+                    style="font-size: clamp(32px, 5vw, 56px); letter-spacing: 4px;">
+                    Спорт
+                </h3>
+                <div class="section-accent"></div>
+                <div class="carousel-container">
+                    <div id="splide-sport" class="splide" aria-label="Спорт галерија">
+                        <div class="splide__track">
+                            <ul class="splide__list">
+                                <li class="splide__slide">
+                                    <div class="carousel-card" tabindex="0">
+                                        <div class="carousel-card__image"><img src="sport/sport-1.jpg"
+                                                alt="Спорт фотографија 1" loading="lazy"></div>
+                                        <div class="carousel-card__overlay">
+                                            <div class="carousel-card__top"><span
+                                                    class="carousel-card__label">Спорт</span><span
+                                                    class="carousel-card__tag">01</span></div>
+                                            <div class="carousel-card__bottom"><span
+                                                    class="carousel-card__title">Фотографија</span><svg
+                                                    class="carousel-card__arrow" viewBox="0 0 24 24" fill="none"
+                                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                    stroke-linejoin="round">
+                                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                                    <polyline points="12 5 19 12 12 19"></polyline>
+                                                </svg></div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="splide__slide">
+                                    <div class="carousel-card" tabindex="0">
+                                        <div class="carousel-card__image"><img src="sport/sport-2.jpg"
+                                                alt="Спорт фотографија 2" loading="lazy"></div>
+                                        <div class="carousel-card__overlay">
+                                            <div class="carousel-card__top"><span
+                                                    class="carousel-card__label">Спорт</span><span
+                                                    class="carousel-card__tag">02</span></div>
+                                            <div class="carousel-card__bottom"><span
+                                                    class="carousel-card__title">Фотографија</span><svg
+                                                    class="carousel-card__arrow" viewBox="0 0 24 24" fill="none"
+                                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                    stroke-linejoin="round">
+                                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                                    <polyline points="12 5 19 12 12 19"></polyline>
+                                                </svg></div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="splide__slide">
+                                    <div class="carousel-card" tabindex="0">
+                                        <div class="carousel-card__image"><img src="sport/sport-3.jpg"
+                                                alt="Спорт фотографија 3" loading="lazy"></div>
+                                        <div class="carousel-card__overlay">
+                                            <div class="carousel-card__top"><span
+                                                    class="carousel-card__label">Спорт</span><span
+                                                    class="carousel-card__tag">03</span></div>
+                                            <div class="carousel-card__bottom"><span
+                                                    class="carousel-card__title">Фотографија</span><svg
+                                                    class="carousel-card__arrow" viewBox="0 0 24 24" fill="none"
+                                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                    stroke-linejoin="round">
+                                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                                    <polyline points="12 5 19 12 12 19"></polyline>
+                                                </svg></div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="splide__slide">
+                                    <div class="carousel-card" tabindex="0">
+                                        <div class="carousel-card__image"><img src="sport/sport-4.jpg"
+                                                alt="Спорт фотографија 4" style="object-position: center calc(50% - 1.6cm);" loading="lazy"></div>
+                                        <div class="carousel-card__overlay">
+                                            <div class="carousel-card__top"><span
+                                                    class="carousel-card__label">Спорт</span><span
+                                                    class="carousel-card__tag">04</span></div>
+                                            <div class="carousel-card__bottom"><span
+                                                    class="carousel-card__title">Фотографија</span><svg
+                                                    class="carousel-card__arrow" viewBox="0 0 24 24" fill="none"
+                                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                    stroke-linejoin="round">
+                                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                                    <polyline points="12 5 19 12 12 19"></polyline>
+                                                </svg></div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="splide__slide">
+                                    <div class="carousel-card" tabindex="0">
+                                        <div class="carousel-card__image"><img src="sport/sport-5.jpg"
+                                                alt="Спорт фотографија 5" loading="lazy"></div>
+                                        <div class="carousel-card__overlay">
+                                            <div class="carousel-card__top"><span
+                                                    class="carousel-card__label">Спорт</span><span
+                                                    class="carousel-card__tag">05</span></div>
+                                            <div class="carousel-card__bottom"><span
+                                                    class="carousel-card__title">Фотографија</span><svg
+                                                    class="carousel-card__arrow" viewBox="0 0 24 24" fill="none"
+                                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                    stroke-linejoin="round">
+                                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                                    <polyline points="12 5 19 12 12 19"></polyline>
+                                                </svg></div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="splide__slide">
+                                    <div class="carousel-card" tabindex="0">
+                                        <div class="carousel-card__image"><img src="sport/sport-6.jpg"
+                                                alt="Спорт фотографија 6" loading="lazy"></div>
+                                        <div class="carousel-card__overlay">
+                                            <div class="carousel-card__top"><span
+                                                    class="carousel-card__label">Спорт</span><span
+                                                    class="carousel-card__tag">06</span></div>
+                                            <div class="carousel-card__bottom"><span
+                                                    class="carousel-card__title">Фотографија</span><svg
+                                                    class="carousel-card__arrow" viewBox="0 0 24 24" fill="none"
+                                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                    stroke-linejoin="round">
+                                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                                    <polyline points="12 5 19 12 12 19"></polyline>
+                                                </svg></div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="splide__slide">
+                                    <div class="carousel-card" tabindex="0">
+                                        <div class="carousel-card__image"><img src="sport/sport-7.jpg"
+                                                alt="Спорт фотографија 7" loading="lazy"></div>
+                                        <div class="carousel-card__overlay">
+                                            <div class="carousel-card__top"><span
+                                                    class="carousel-card__label">Спорт</span><span
+                                                    class="carousel-card__tag">07</span></div>
+                                            <div class="carousel-card__bottom"><span
+                                                    class="carousel-card__title">Фотографија</span><svg
+                                                    class="carousel-card__arrow" viewBox="0 0 24 24" fill="none"
+                                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                    stroke-linejoin="round">
+                                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                                    <polyline points="12 5 19 12 12 19"></polyline>
+                                                </svg></div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-4 flex justify-end pr-4 md:pr-0">
+                    <a href="galerija-sport.html"
+                        class="font-body text-sm text-white hover:text-[#FF7800] transition-colors"
+                        style="text-decoration: underline; text-underline-offset: 4px;">
+                        View all
+                    </a>
+                </div>
+            </div>
+        </section>
         <!-- ===== FINAL CTA ===== -->
-        <section id="cta" class="py-24 md:py-32 px-4 text-center" style="z-index: 7; position: relative; background: #000; min-height: 100vh; min-height: 100dvh; display: flex; flex-direction: column; justify-content: center; overflow: hidden;">
+        <section id="cta" class="py-24 md:py-32 px-4 text-center"
+            style="z-index: 7; position: relative; background: #000; min-height: 100vh; min-height: 100dvh; display: flex; flex-direction: column; justify-content: center; overflow: hidden;">
             <video class="cta-bg-video" autoplay loop muted playsinline>
                 <source src="extend.mp4" type="video/mp4">
             </video>
@@ -982,126 +1575,19 @@
             (function () {
                 'use strict';
 
-                // ===== CONSTANTS =====
-                const TOTAL_FRAMES = 145;
-                const FRAME_PATH = 'frames/frame_';
                 const MORPH_THRESHOLD = 80;
-                const frames = [];
-                let currentFrame = -1;
-                let rafId = null;
-
-                // ===== CANVAS SETUP =====
-                const canvas = document.getElementById('scroll-canvas');
-                const ctx = canvas.getContext('2d');
-
-                let isMobile = window.innerWidth <= 768 || ('ontouchstart' in window && window.innerWidth <= 1024);
-                let activeDpr = 1;
-
-                // On mobile: load every 3rd frame to save memory (~48 frames vs 145)
-                const MOBILE_FRAME_STEP = 3;
-                const mobileFrameIndices = [];
-                if (isMobile) {
-                    for (let i = 0; i < TOTAL_FRAMES; i += MOBILE_FRAME_STEP) {
-                        mobileFrameIndices.push(i);
-                    }
-                }
-                const EFFECTIVE_FRAMES = isMobile ? mobileFrameIndices.length : TOTAL_FRAMES;
-
-                function resizeCanvas() {
-                    const maxDpr = isMobile ? 1.5 : 2;
-                    activeDpr = Math.min(window.devicePixelRatio || 1, maxDpr);
-                    if (isMobile) {
-                        // Option B: canvas is hidden on mobile, no resize needed
-                        return;
-                    } else {
-                        const w = window.innerWidth;
-                        const h = window.innerHeight;
-                        canvas.width = w * activeDpr;
-                        canvas.height = h * activeDpr;
-                        canvas.style.width = w + 'px';
-                        canvas.style.height = h + 'px';
-                    }
-                    ctx.setTransform(activeDpr, 0, 0, activeDpr, 0, 0);
-                    if (frames[currentFrame >= 0 ? currentFrame : 0]) {
-                        drawFrame(frames[currentFrame >= 0 ? currentFrame : 0]);
-                    }
-                }
-
-                // ===== DRAWING FUNCTIONS =====
-                function drawFrameCover(img) {
-                    const cw = canvas.width / activeDpr;
-                    const ch = canvas.height / activeDpr;
-                    const ir = img.width / img.height;
-                    const cr = cw / ch;
-                    let dw, dh, ox, oy;
-                    if (ir > cr) {
-                        dh = ch; dw = ch * ir; ox = (cw - dw) / 2; oy = 0;
-                    } else {
-                        dw = cw; dh = cw / ir; ox = 0; oy = (ch - dh) / 2;
-                    }
-                    ctx.clearRect(0, 0, cw, ch);
-                    ctx.drawImage(img, ox, oy, dw, dh);
-                }
-
-                function drawFrameContain(img, zoom) {
-                    zoom = zoom || 1.2;
-                    const cw = canvas.width / activeDpr;
-                    const ch = canvas.height / activeDpr;
-                    const ir = img.width / img.height;
-                    const cr = cw / ch;
-                    let dw, dh;
-                    if (ir > cr) { dw = cw * zoom; dh = dw / ir; }
-                    else { dh = ch * zoom; dw = dh * ir; }
-                    const ox = (cw - dw) / 2;
-                    const oy = (ch - dh) / 2;
-                    ctx.clearRect(0, 0, cw, ch);
-                    ctx.drawImage(img, ox, oy, dw, dh);
-                }
-
-                function drawFrame(img) {
-                    drawFrameCover(img);
-                }
-
-                // ===== FRAME PRELOADING =====
-                function preloadFrames() {
-                    return new Promise((resolve) => {
-                        if (isMobile) {
-                            // Option B: Skip frame preloading on mobile completely
-                            updateLoader(1);
-                            resolve();
-                        } else {
-                            // Desktop: load all frames
-                            let loaded = 0;
-                            for (let i = 1; i <= TOTAL_FRAMES; i++) {
-                                const img = new Image();
-                                const idx = String(i).padStart(4, '0');
-                                img.src = FRAME_PATH + idx + '.jpg';
-                                img.onload = img.onerror = function () {
-                                    loaded++;
-                                    updateLoader(loaded / TOTAL_FRAMES);
-                                    if (loaded === TOTAL_FRAMES) resolve();
-                                };
-                                frames[i - 1] = img;
-                            }
-                        }
-                    });
-                }
-
-                // ===== LOADER =====
-                function updateLoader(progress) {
-                    const fill = document.getElementById('loader-fill');
-                    const percent = document.getElementById('loader-percent');
-                    const pct = Math.round(progress * 100);
-                    fill.style.width = pct + '%';
-                    percent.textContent = pct + '%';
-                }
+                const isMobile = window.innerWidth <= 768 || ('ontouchstart' in window && window.innerWidth <= 1024);
 
                 function hideLoader() {
                     const loader = document.getElementById('loader');
+                    if (!loader) return;
+                    const fill = document.getElementById('loader-fill');
+                    const percent = document.getElementById('loader-percent');
+                    if (fill) fill.style.width = '100%';
+                    if (percent) percent.textContent = '100%';
                     loader.classList.add('hidden');
                     setTimeout(() => {
                         loader.remove();
-                        // Vertical wipe: lightest panel slides up first, then darker ones follow
                         const wipeTl = gsap.timeline();
                         wipeTl
                             .to('#intro-wipe .wipe-panel:nth-child(3)', { yPercent: -100, duration: 0.55, ease: 'expo.inOut' }, 0)
@@ -1109,99 +1595,6 @@
                             .to('#intro-wipe .wipe-panel:nth-child(1)', { yPercent: -100, duration: 0.55, ease: 'expo.inOut' }, 0.36)
                             .set('#intro-wipe', { display: 'none' });
                     }, 600);
-                }
-
-                // ===== SCROLL-DRIVEN VIDEO =====
-                function handleScrollAnimation() {
-                    const section = document.getElementById('scroll-video');
-                    if (!section) return;
-                    const rect = section.getBoundingClientRect();
-                    const sectionTop = -rect.top;
-                    const windowH = window.innerHeight;
-                    const sectionHeight = section.offsetHeight - windowH;
-                    if (sectionHeight <= 0) return;
-
-                    const wrap = document.querySelector('.scroll-canvas-wrap');
-                    const sportSection = document.getElementById('sport');
-                    const restOfSite = document.getElementById('rest-of-site');
-                    const canvasEl = document.getElementById('scroll-canvas');
-
-                    if (isMobile) {
-                        // === MOBILE: Option B simple static autoplay background hero ===
-                        // No transforms on rest-of-site or sport section on mobile
-                        if (restOfSite) restOfSite.style.transform = '';
-                        if (sportSection) sportSection.style.transform = '';
-                        return;
-                    }
-
-                    // === DESKTOP: full zoom transition ===
-                    // The last 2.5 window heights of scroll are used for the long, slow zoom transition
-                    const transitionPhaseLength = windowH * 2.5;
-                    const videoFramesScrollLength = Math.max(1, sectionHeight - transitionPhaseLength);
-
-                    const frameProgress = Math.max(0, Math.min(1, sectionTop / videoFramesScrollLength));
-                    const frameIndex = Math.min(TOTAL_FRAMES - 1, Math.floor(frameProgress * (TOTAL_FRAMES - 1)));
-
-                    if (frameIndex !== currentFrame && frames[frameIndex]) {
-                        currentFrame = frameIndex;
-                        drawFrame(frames[currentFrame]);
-                    }
-
-                    let zoomProgress = 0;
-                    if (sectionTop > videoFramesScrollLength) {
-                        zoomProgress = Math.min(1, (sectionTop - videoFramesScrollLength) / transitionPhaseLength);
-                    }
-
-                    if (zoomProgress > 0) {
-                        const easeInCubic = Math.pow(zoomProgress, 3);
-                        const scale = 1.05 + (easeInCubic * 80);
-                        canvasEl.style.transform = `scale(${scale})`;
-                        canvasEl.style.transformOrigin = '55% 50%';
-
-                        let fadeProgress = 0;
-                        const fadeStart = 0.3;
-                        if (zoomProgress > fadeStart) {
-                             fadeProgress = (zoomProgress - fadeStart) / (1 - fadeStart);
-                        }
-                        wrap.style.opacity = Math.max(0, 1 - Math.pow(fadeProgress, 2));
-                        section.style.background = `rgba(0,0,0, ${Math.max(0, 1 - fadeProgress)})`;
-                        section.style.pointerEvents = (zoomProgress >= 0.75) ? 'none' : '';
-
-                        if (sportSection) {
-                            if (zoomProgress >= 0.75) {
-                                sportSection.style.transform = '';
-                                if (!window.__sportSplideRefreshed && window.__sportSplide) {
-                                    window.__sportSplide.refresh();
-                                    window.__sportSplideRefreshed = true;
-                                }
-                            } else {
-                                const easeOutCubic = 1 - Math.pow(1 - zoomProgress, 3);
-                                const sportScale = 2.5 - (1.5 * easeOutCubic);
-                                sportSection.style.transform = `scale(${sportScale})`;
-                                sportSection.style.transformOrigin = '50% 50%';
-                            }
-                        }
-                    } else {
-                        canvasEl.style.transform = `scale(1.05)`;
-                        canvasEl.style.opacity = 1;
-                        wrap.style.opacity = 1;
-                        section.style.background = '#000';
-                        section.style.pointerEvents = '';
-                        if (sportSection) {
-                            sportSection.style.transform = `scale(2.5)`;
-                            window.__sportSplideRefreshed = false;
-                        }
-                    }
-
-                    if (restOfSite) {
-                        if (zoomProgress >= 1) {
-                            restOfSite.style.transform = '';
-                        } else if (zoomProgress <= 0) {
-                            restOfSite.style.transform = `translateY(${-transitionPhaseLength}px)`;
-                        } else {
-                            restOfSite.style.transform = `translateY(${-transitionPhaseLength * (1 - zoomProgress)}px)`;
-                        }
-                    }
                 }
 
                 // ===== MOBILE MENU =====
@@ -1218,14 +1611,12 @@
                     });
                 });
 
-                // ===== NAVBAR SCROLL =====
                 function handleNavbar() {
                     const navbar = document.getElementById('navbar');
                     if (window.scrollY > MORPH_THRESHOLD) navbar.classList.add('scrolled');
                     else navbar.classList.remove('scrolled');
                 }
 
-                // ===== SCROLL PROGRESS BAR =====
                 function handleProgressBar() {
                     const bar = document.getElementById('scroll-progress');
                     const scrollTop = window.scrollY;
@@ -1235,9 +1626,6 @@
                     }
                 }
 
-
-
-                // ===== SECTION FADE-IN =====
                 function initFadeSections() {
                     const sections = document.querySelectorAll('.fade-section');
                     const observer = new IntersectionObserver((entries) => {
@@ -1252,48 +1640,21 @@
                     sections.forEach(s => observer.observe(s));
                 }
 
-                // ===== COMBINED SCROLL HANDLER =====
                 function onScroll() {
-                    handleScrollAnimation();
                     handleNavbar();
                     handleProgressBar();
                 }
 
-                // ===== SMOOTH SCROLL FOR ANCHOR LINKS (via Lenis) =====
-                // Deferred until Lenis is ready — see Lenis init block below
-
-                // ===== INIT =====
-                async function init() {
-                    document.body.style.overflow = 'hidden';
-                    resizeCanvas();
-
-                    await preloadFrames();
+                function init() {
                     hideLoader();
 
-                    document.body.style.overflow = '';
-
-                    // Draw first frame
-                    const firstFrameIdx = isMobile ? mobileFrameIndices[0] : 0;
-                    if (frames[firstFrameIdx]) {
-                        currentFrame = firstFrameIdx;
-                        drawFrame(frames[firstFrameIdx]);
-                    }
-
-                    // Only apply negative margin for desktop zoom transition
-                    if (!isMobile) {
-                        const restOfSite = document.getElementById('rest-of-site');
-                        if (restOfSite) restOfSite.style.marginTop = '-100vh';
-                    }
-
-                    // Pause SVG comet animations on mobile to save CPU
                     if (isMobile) {
-                        document.querySelectorAll('.circle-container svg animate').forEach(function(el) {
+                        document.querySelectorAll('.circle-container svg animate').forEach(function (el) {
                             el.setAttribute('repeatCount', '1');
                         });
                     }
 
                     window.addEventListener('scroll', onScroll, { passive: true });
-                    window.addEventListener('resize', resizeCanvas);
 
                     initFadeSections();
                 }
@@ -1383,6 +1744,139 @@
         })();
     </script>
 
+
+
+    <!-- LIGHTBOX -->
+    <div id="lightbox" role="dialog" aria-modal="true" aria-label="Слика">
+        <button id="lb-close" aria-label="Затвори">&#x2715;</button>
+        <button id="lb-prev" aria-label="Претходна">&#x2039;</button>
+        <button id="lb-next" aria-label="Следна">&#x203A;</button>
+        <div id="lb-img-wrap">
+            <img id="lb-img" src="" alt="">
+        </div>
+        <div id="lb-banner">
+            <span id="lb-label"></span>
+            <span id="lb-num"></span>
+            <span id="lb-title"></span>
+            <span id="lb-counter"></span>
+        </div>
+    </div>
+
+    <script>
+        (function () {
+            var lb = document.getElementById('lightbox');
+            var lbImg = document.getElementById('lb-img');
+            var lbLabel = document.getElementById('lb-label');
+            var lbNum = document.getElementById('lb-num');
+            var lbTitle = document.getElementById('lb-title');
+            var lbCounter = document.getElementById('lb-counter');
+            var lbClose = document.getElementById('lb-close');
+            var lbPrev = document.getElementById('lb-prev');
+            var lbNext = document.getElementById('lb-next');
+
+            var currentItems = [];
+            var currentIndex = 0;
+
+            function showItem() {
+                var item = currentItems[currentIndex];
+                lbImg.src = item.src;
+                lbImg.alt = item.label + ' ' + item.num;
+                lbLabel.textContent = item.label;
+                lbNum.textContent = item.num;
+                lbTitle.textContent = item.title;
+                lbCounter.textContent = (currentIndex + 1) + ' / ' + currentItems.length;
+            }
+
+            function openLightbox(items, index) {
+                currentItems = items;
+                currentIndex = index;
+                showItem();
+                lb.classList.add('lb-open');
+                document.body.style.overflow = 'hidden';
+                lbClose.focus();
+            }
+
+            function closeLightbox() {
+                lb.classList.remove('lb-open');
+                document.body.style.overflow = '';
+            }
+
+            function prev() {
+                currentIndex = (currentIndex - 1 + currentItems.length) % currentItems.length;
+                showItem();
+            }
+
+            function next() {
+                currentIndex = (currentIndex + 1) % currentItems.length;
+                showItem();
+            }
+
+            lbClose.addEventListener('click', closeLightbox);
+            lbPrev.addEventListener('click', prev);
+            lbNext.addEventListener('click', next);
+
+            lb.addEventListener('click', function (e) {
+                if (e.target === lb || e.target === document.getElementById('lb-img-wrap')) {
+                    closeLightbox();
+                }
+            });
+
+            document.addEventListener('keydown', function (e) {
+                if (!lb.classList.contains('lb-open')) return;
+                if (e.key === 'Escape') closeLightbox();
+                if (e.key === 'ArrowLeft') prev();
+                if (e.key === 'ArrowRight') next();
+            });
+
+            var touchStartX = 0;
+            lb.addEventListener('touchstart', function (e) {
+                touchStartX = e.changedTouches[0].clientX;
+            }, { passive: true });
+            lb.addEventListener('touchend', function (e) {
+                var dx = e.changedTouches[0].clientX - touchStartX;
+                if (Math.abs(dx) > 50) { if (dx < 0) next(); else prev(); }
+            }, { passive: true });
+
+            // Wire up after Splide has mounted (it clones slides during DOMContentLoaded)
+            // Use event delegation on the section so clicks on cloned slides also work.
+            document.addEventListener('DOMContentLoaded', function () {
+                document.querySelectorAll('.sticky-section').forEach(function (section) {
+                    // Build items from original (non-clone) slides only
+                    var items = [];
+                    section.querySelectorAll('.splide__slide:not(.splide__slide--clone) .carousel-card').forEach(function (card) {
+                        var img = card.querySelector('img');
+                        var label = card.querySelector('.carousel-card__label');
+                        var tag = card.querySelector('.carousel-card__tag');
+                        var title = card.querySelector('.carousel-card__title');
+                        items.push({
+                            src: img ? img.getAttribute('src') : '',
+                            label: label ? label.textContent : '',
+                            num: tag ? tag.textContent : '',
+                            title: title ? title.textContent : ''
+                        });
+                    });
+
+                    // Event delegation — works on clones too
+                    section.addEventListener('click', function (e) {
+                        var card = e.target.closest('.carousel-card');
+                        if (!card) return;
+                        // Find which item this corresponds to by matching image src
+                        var img = card.querySelector('img');
+                        var src = img ? img.getAttribute('src') : '';
+                        var idx = items.findIndex(function (it) { return it.src === src; });
+                        if (idx === -1) idx = 0;
+                        openLightbox(items, idx);
+                    });
+
+                    // Set cursor on all cards (including clones added later) via CSS already handles it,
+                    // but set inline for any that were missed
+                    section.querySelectorAll('.carousel-card').forEach(function (c) {
+                        c.style.cursor = 'pointer';
+                    });
+                });
+            });
+        })();
+    </script>
 
 </body>
 

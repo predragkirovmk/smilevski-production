@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="mk">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Настани Фотографија — Smilevski Production</title>
+    <link rel="icon" type="image/png" href="logo.png">
+    <meta name="description" content="Галерија на настани фотографија — Smilevski Production. Професионално фотографирање на настани, концерти и прослави во Македонија.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://smilevskiproduction.com/galerija-nastani.html">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://smilevskiproduction.com/galerija-nastani.html">
+    <meta property="og:title" content="Настани Фотографија — Smilevski Production">
+    <meta property="og:description" content="Галерија на настани фотографија — Smilevski Production.">
+    <meta property="og:image" content="https://smilevskiproduction.com/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&family=Unbounded:wght@400;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html { font-size: 100%; -webkit-text-size-adjust: 100%; }
+        body { font-family: 'Lora', serif; background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
+
+        /* NAVBAR */
+        #navbar {
+            position: fixed; top: 16px; left: 16px; right: 16px; z-index: 100;
+        }
+        .nav-inner {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 12px 24px; border-radius: 50px;
+            background: rgba(0,0,0,0.7); backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.08);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+        }
+        .nav-logo { width: 36px; height: 36px; border-radius: 50%; }
+        .nav-back {
+            font-family: 'Lora', serif; font-size: 14px; font-weight: 500;
+            opacity: 0.8; transition: opacity 0.2s, color 0.2s;
+            text-decoration: none; color: #fff; display: flex; align-items: center; gap: 8px;
+        }
+        .nav-back:hover { opacity: 1; color: #FF7800; }
+        .nav-back svg { width: 16px; height: 16px; }
+
+        /* PAGE HEADER */
+        .page-header {
+            padding: 140px 24px 60px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+        .page-label {
+            font-family: 'Lora', serif; font-size: 12px; letter-spacing: 4px;
+            text-transform: uppercase; opacity: 0.4; margin-bottom: 16px;
+        }
+        .page-title {
+            font-family: 'Unbounded', sans-serif; font-weight: 900;
+            font-size: clamp(36px, 6vw, 72px); letter-spacing: 4px;
+            line-height: 1.1; margin-bottom: 20px;
+        }
+        .section-accent {
+            width: 50px; height: 2px; background: #FF7800; margin: 0 auto;
+        }
+
+        /* GALLERY GRID */
+        .gallery-section {
+            max-width: 1200px; margin: 0 auto; padding: 80px 24px 120px;
+        }
+
+        /* GALLERY GRID */
+        .gallery-grid {
+            columns: 3 300px;
+            column-gap: 12px;
+            gap: 12px;
+        }
+        .gallery-item {
+            break-inside: avoid;
+            margin-bottom: 12px;
+            overflow: hidden;
+            border-radius: 4px;
+            cursor: pointer;
+            position: relative;
+        }
+        .gallery-item img {
+            width: 100%; height: auto; display: block;
+            transition: transform 0.4s ease, opacity 0.4s ease;
+            will-change: transform;
+        }
+        .gallery-item:hover img { transform: scale(1.03); opacity: 0.85; }
+        .gallery-item::after {
+            content: ''; position: absolute; inset: 0;
+            background: linear-gradient(to bottom, transparent 60%, rgba(0,0,0,0.5));
+            opacity: 0; transition: opacity 0.3s ease; pointer-events: none;
+        }
+        .gallery-item:hover::after { opacity: 1; }
+
+        /* LIGHTBOX */
+        #lightbox {
+            position: fixed; inset: 0; z-index: 200;
+            background: rgba(0,0,0,0.95);
+            display: flex; align-items: center; justify-content: center;
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        #lightbox.open { opacity: 1; pointer-events: all; }
+        #lightbox img {
+            max-width: 90vw; max-height: 90vh;
+            object-fit: contain; border-radius: 2px;
+            transform: scale(0.95); transition: transform 0.3s ease;
+        }
+        #lightbox.open img { transform: scale(1); }
+        #lightbox-close {
+            position: fixed; top: 24px; right: 24px;
+            width: 44px; height: 44px; border-radius: 50%;
+            background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12);
+            color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center;
+            transition: background 0.2s;
+        }
+        #lightbox-close:hover { background: rgba(255,120,0,0.2); }
+        #lightbox-close svg { width: 20px; height: 20px; }
+        #lightbox-prev, #lightbox-next {
+            position: fixed; top: 50%; transform: translateY(-50%);
+            width: 44px; height: 44px; border-radius: 50%;
+            background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12);
+            color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center;
+            transition: background 0.2s;
+        }
+        #lightbox-prev { left: 24px; }
+        #lightbox-next { right: 24px; }
+        #lightbox-prev:hover, #lightbox-next:hover { background: rgba(255,120,0,0.2); }
+        #lightbox-prev svg, #lightbox-next svg { width: 20px; height: 20px; }
+
+        @media (max-width: 600px) {
+            .gallery-grid { columns: 1; }
+        }
+
+        /* FOOTER */
+        footer {
+            border-top: 1px solid rgba(54,69,79,0.2);
+            padding: 40px 24px; text-align: center;
+        }
+        footer p { font-family: 'Unbounded', sans-serif; font-size: 12px; opacity: 0.25; letter-spacing: 3px; }
+        footer span { font-family: 'Lora', serif; font-size: 11px; opacity: 0.15; display: block; margin-top: 8px; }
+
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #000; }
+        ::-webkit-scrollbar-thumb { background: linear-gradient(180deg,#FF7800,#36454F); border-radius: 3px; }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav id="navbar" role="navigation" aria-label="Навигација">
+        <div class="nav-inner">
+            <a href="index.html" class="flex items-center gap-2">
+                <img src="logo.png" alt="Smilevski Production лого" class="nav-logo">
+            </a>
+            <a href="index.html#events" class="nav-back">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="19" y1="12" x2="5" y2="12"></line>
+                    <polyline points="12 19 5 12 12 5"></polyline>
+                </svg>
+                Назад
+            </a>
+        </div>
+    </nav>
+
+    <main>
+        <div class="page-header">
+            <p class="page-label">Галерија</p>
+            <h1 class="page-title">Настани</h1>
+            <div class="section-accent"></div>
+        </div>
+
+        <div class="gallery-section">
+            <div class="gallery-grid" id="galleryGrid">
+                <div class="gallery-item" data-index="0">
+                    <img src="nastani/nastani-5.jpg" alt="Настан фотографија 5" loading="lazy">
+                </div>
+                <div class="gallery-item" data-index="1">
+                    <img src="nastani/nastani-6.jpg" alt="Настан фотографија 6" loading="lazy">
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Lightbox -->
+    <div id="lightbox" role="dialog" aria-modal="true" aria-label="Преглед на фотографија">
+        <button id="lightbox-close" aria-label="Затвори">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+        </button>
+        <button id="lightbox-prev" aria-label="Претходна">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+        </button>
+        <img id="lightbox-img" src="" alt="">
+        <button id="lightbox-next" aria-label="Следна">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+        </button>
+    </div>
+
+    <script>
+        const images = [
+            { src: 'nastani/nastani-5.jpg', alt: 'Настан фотографија 5' },
+            { src: 'nastani/nastani-6.jpg', alt: 'Настан фотографија 6' },
+        ];
+        let current = 0;
+        const lb = document.getElementById('lightbox');
+        const lbImg = document.getElementById('lightbox-img');
+
+        function openLightbox(idx) {
+            current = idx;
+            lbImg.src = images[idx].src;
+            lbImg.alt = images[idx].alt;
+            lb.classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeLightbox() {
+            lb.classList.remove('open');
+            document.body.style.overflow = '';
+        }
+        function showPrev() { current = (current - 1 + images.length) % images.length; lbImg.src = images[current].src; lbImg.alt = images[current].alt; }
+        function showNext() { current = (current + 1) % images.length; lbImg.src = images[current].src; lbImg.alt = images[current].alt; }
+
+        document.querySelectorAll('.gallery-item').forEach(item => {
+            item.addEventListener('click', () => openLightbox(+item.dataset.index));
+        });
+        document.getElementById('lightbox-close').addEventListener('click', closeLightbox);
+        document.getElementById('lightbox-prev').addEventListener('click', showPrev);
+        document.getElementById('lightbox-next').addEventListener('click', showNext);
+        lb.addEventListener('click', e => { if (e.target === lb) closeLightbox(); });
+        document.addEventListener('keydown', e => {
+            if (!lb.classList.contains('open')) return;
+            if (e.key === 'Escape') closeLightbox();
+            if (e.key === 'ArrowLeft') showPrev();
+            if (e.key === 'ArrowRight') showNext();
+        });
+    </script>
+
+    <footer>
+        <p>SMILEVSKI PRODUCTION</p>
+        <span>&copy; 2026 Smilevski Production. Сите права задржани.</span>
+    </footer>
+
+</body>
+</html>
