@@ -146,6 +146,10 @@
         ::-webkit-scrollbar-track { background: #000; }
         ::-webkit-scrollbar-thumb { background: linear-gradient(180deg,#FF7800,#36454F); border-radius: 3px; }
     </style>
+
+    <!-- Supabase SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js"></script>
 </head>
 
 <body>
@@ -175,12 +179,6 @@
 
         <div class="gallery-section">
             <div class="gallery-grid" id="galleryGrid">
-                <div class="gallery-item" data-index="0">
-                    <img src="nastani/nastani-5.jpg" alt="Настан фотографија 5" loading="lazy">
-                </div>
-                <div class="gallery-item" data-index="1">
-                    <img src="nastani/nastani-6.jpg" alt="Настан фотографија 6" loading="lazy">
-                </div>
             </div>
         </div>
     </main>
@@ -206,13 +204,42 @@
     </div>
 
     <script>
-        const images = [
-            { src: 'nastani/nastani-5.jpg', alt: 'Настан фотографија 5' },
-            { src: 'nastani/nastani-6.jpg', alt: 'Настан фотографија 6' },
-        ];
+        const images = [];
         let current = 0;
         const lb = document.getElementById('lightbox');
         const lbImg = document.getElementById('lightbox-img');
+
+        // Fetch dynamic images from Supabase
+        if (typeof supabaseClient !== 'undefined') {
+            supabaseClient
+                .from('galleries')
+                .select('*')
+                .eq('category', 'nastani')
+                .order('created_at', { ascending: false })
+                .then(({ data, error }) => {
+                    if (error) {
+                        console.error("Error fetching images: ", error);
+                        return;
+                    }
+                    if (data && data.length > 0) {
+                        const comingSoon = document.getElementById('comingSoon');
+                        if (comingSoon) comingSoon.style.display = 'none';
+                    }
+                    data.forEach(row => {
+                        const index = images.length;
+                        images.push({ src: row.url, alt: 'Настан фотографија ' + (index + 1) });
+                        
+                        // Add to DOM
+                        const grid = document.getElementById('galleryGrid');
+                        const div = document.createElement('div');
+                        div.className = 'gallery-item';
+                        div.dataset.index = index;
+                        div.innerHTML = `<img src="${row.url}" alt="Настан фотографија ${index + 1}" loading="lazy">`;
+                        div.addEventListener('click', () => openLightbox(index));
+                        grid.appendChild(div);
+                    });
+                });
+        }
 
         function openLightbox(idx) {
             current = idx;

@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="mk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Администрација — Smilevski Production</title>
+    <link rel="icon" type="image/png" href="logo.png">
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&family=Unbounded:wght@400;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Lora', serif; background: #000; color: #fff; min-height: 100vh; display: flex; align-items: center; justify-content: center; }
+        
+        .container {
+            background: #111; padding: 40px; border-radius: 8px; width: 100%; max-width: 500px;
+            border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+        }
+        h2 { font-family: 'Unbounded', sans-serif; text-align: center; margin-bottom: 24px; color: #FF7800; }
+        
+        .form-group { margin-bottom: 20px; }
+        label { display: block; margin-bottom: 8px; font-size: 14px; opacity: 0.8; }
+        input[type="email"], input[type="password"], select, input[type="file"] {
+            width: 100%; padding: 12px; background: #222; border: 1px solid #333; color: #fff;
+            border-radius: 4px; font-family: 'Lora', serif;
+        }
+        input:focus, select:focus { outline: none; border-color: #FF7800; }
+        
+        button {
+            width: 100%; padding: 14px; background: #FF7800; color: #fff; border: none;
+            border-radius: 4px; font-family: 'Unbounded', sans-serif; font-weight: 700;
+            cursor: pointer; transition: background 0.2s; margin-top: 10px;
+        }
+        button:hover { background: #e06900; }
+        
+        #error-msg, #upload-msg { text-align: center; margin-top: 15px; font-size: 14px; display: none; }
+        #error-msg { color: #ff4444; }
+        #upload-msg { color: #44ff44; }
+
+        .hidden { display: none !important; }
+        .loading { opacity: 0.5; pointer-events: none; }
+        
+        #dashboard-section { text-align: center; }
+        #logout-btn { background: #333; margin-top: 20px; }
+        #logout-btn:hover { background: #444; }
+    </style>
+
+    <!-- Supabase SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Админ Панел</h2>
+        
+        <!-- Login Section -->
+        <div id="login-section">
+            <div class="form-group">
+                <label>Емаил</label>
+                <input type="email" id="email" placeholder="admin@example.com" required>
+            </div>
+            <div class="form-group">
+                <label>Лозинка</label>
+                <input type="password" id="password" placeholder="••••••••" required>
+            </div>
+            <button id="login-btn">Најави се</button>
+            <p id="error-msg"></p>
+        </div>
+
+        <!-- Dashboard Section -->
+        <div id="dashboard-section" class="hidden">
+            <div class="form-group">
+                <label>Избери Галерија</label>
+                <select id="gallery-select">
+                    <option value="nastani">Настани</option>
+                    <option value="promocii">Промоции</option>
+                    <option value="solo">Фотосесија</option>
+                    <option value="sport">Спорт</option>
+                    <option value="nocen-klub">Ноќен Клуб</option>
+                    <option value="krstevki">Крштевки</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Прикачи Фотографија</label>
+                <input type="file" id="image-file" accept="image/*">
+            </div>
+            <button id="upload-btn">Прикачи</button>
+            <p id="upload-msg"></p>
+
+            <button id="logout-btn">Одјави се</button>
+        </div>
+    </div>
+
+    <!-- Supabase Configuration -->
+    <script src="supabase-config.js"></script>
+
+    <script>
+        const loginSection = document.getElementById('login-section');
+        const dashboardSection = document.getElementById('dashboard-section');
+        const errorMsg = document.getElementById('error-msg');
+        const uploadMsg = document.getElementById('upload-msg');
+
+        // Check active session on load
+        async function checkSession() {
+            const { data: { session } } = await supabaseClient.auth.getSession();
+            if (session) {
+                loginSection.classList.add('hidden');
+                dashboardSection.classList.remove('hidden');
+            } else {
+                loginSection.classList.remove('hidden');
+                dashboardSection.classList.add('hidden');
+            }
+        }
+        checkSession();
+
+        // Listen for auth changes
+        supabaseClient.auth.onAuthStateChange((event, session) => {
+            if (session) {
+                loginSection.classList.add('hidden');
+                dashboardSection.classList.remove('hidden');
+            } else {
+                loginSection.classList.remove('hidden');
+                dashboardSection.classList.add('hidden');
+            }
+        });
+
+        // Login Logic
+        document.getElementById('login-btn').addEventListener('click', async () => {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            errorMsg.style.display = 'none';
+
+            const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
+            if (error) {
+                errorMsg.innerText = error.message;
+                errorMsg.style.display = 'block';
+            }
+        });
+
+        // Logout Logic
+        document.getElementById('logout-btn').addEventListener('click', async () => {
+            await supabaseClient.auth.signOut();
+        });
+
+        // Convert any image to WebP with optional resize
+        function convertToWebP(file, quality = 0.82, maxDimension = 2000) {
+            return new Promise((resolve, reject) => {
+                const img = new Image();
+                const url = URL.createObjectURL(file);
+                img.onload = () => {
+                    let w = img.naturalWidth;
+                    let h = img.naturalHeight;
+                    if (w > maxDimension || h > maxDimension) {
+                        if (w > h) { h = Math.round(h * maxDimension / w); w = maxDimension; }
+                        else { w = Math.round(w * maxDimension / h); h = maxDimension; }
+                    }
+                    const canvas = document.createElement('canvas');
+                    canvas.width = w;
+                    canvas.height = h;
+                    canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+                    URL.revokeObjectURL(url);
+                    canvas.toBlob(blob => blob ? resolve(blob) : reject(new Error('WebP conversion failed')), 'image/webp', quality);
+                };
+                img.onerror = () => { URL.revokeObjectURL(url); reject(new Error('Image load failed')); };
+                img.src = url;
+            });
+        }
+
+        // Upload Logic
+        document.getElementById('upload-btn').addEventListener('click', async () => {
+            const file = document.getElementById('image-file').files[0];
+            const gallery = document.getElementById('gallery-select').value;
+            const uploadBtn = document.getElementById('upload-btn');
+
+            if (!file) {
+                uploadMsg.innerText = "Ве молиме изберете фотографија.";
+                uploadMsg.style.color = "#ff4444";
+                uploadMsg.style.display = "block";
+                return;
+            }
+
+            uploadBtn.classList.add('loading');
+            uploadBtn.innerText = "Се конвертира...";
+            uploadMsg.style.display = 'none';
+
+            try {
+                // Convert to WebP before upload
+                const webpBlob = await convertToWebP(file);
+                const baseName = file.name.replace(/\.[^/.]+$/, '');
+                const fileName = `${gallery}/${Date.now()}_${baseName}.webp`;
+
+                uploadBtn.innerText = "Се прикачува...";
+
+                // Step 1: Upload to Storage
+                const { data: uploadData, error: uploadError } = await supabaseClient.storage
+                    .from('galleries')
+                    .upload(fileName, webpBlob, { contentType: 'image/webp' });
+
+                if (uploadError) {
+                    throw new Error("Storage RLS Error: " + uploadError.message);
+                }
+
+                // Get public URL
+                const { data: urlData } = supabaseClient.storage
+                    .from('galleries')
+                    .getPublicUrl(fileName);
+                
+                const publicUrl = urlData.publicUrl;
+
+                // Step 2: Save to Database
+                const { error: dbError } = await supabaseClient
+                    .from('galleries')
+                    .insert([{ category: gallery, url: publicUrl }]);
+
+                if (dbError) {
+                    throw new Error("Database RLS Error: " + dbError.message);
+                }
+
+                uploadMsg.innerText = "Фотографијата е успешно прикачена!";
+                uploadMsg.style.color = "#44ff44";
+                uploadMsg.style.display = 'block';
+                document.getElementById('image-file').value = ''; // Reset file input
+            } catch (error) {
+                uploadMsg.innerText = "Грешка: " + error.message;
+                uploadMsg.style.color = "#ff4444";
+                uploadMsg.style.display = 'block';
+            } finally {
+                uploadBtn.classList.remove('loading');
+                uploadBtn.innerText = "Прикачи";
+            }
+        });
+    </script>
+</body>
+</html>

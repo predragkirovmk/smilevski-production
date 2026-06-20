@@ -53,6 +53,8 @@
         href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&family=Unbounded:wght@400;700;800;900&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@3.2.2/dist/css/splide-core.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    <script src="supabase-config.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@3.2.2/dist/js/splide.min.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
@@ -813,10 +815,12 @@
                 <span></span>
             </button>
             <div class="nav-links" id="navLinks">
-                <a href="#solo">Соло</a>
+                <a href="#solo">Фотосесија</a>
                 <a href="#events">Настани</a>
                 <a href="#promo">Промоции</a>
                 <a href="#sport">Спорт</a>
+                <a href="#krstevki">Крштевки</a>
+                <a href="#nocen-klub">Ноќен Клуб</a>
                 <a href="#cta">Резервации</a>
             </div>
         </div>
@@ -921,16 +925,16 @@
                 </h3>
                 <div class="section-accent"></div>
                 <div class="carousel-container">
-                    <div id="splide-solo" class="splide" aria-label="Соло слики галерија">
+                    <div id="splide-solo" class="splide" aria-label="Фотосесија галерија">
                         <div class="splide__track">
                             <ul class="splide__list">
                                 <li class="splide__slide">
                                     <div class="carousel-card" tabindex="0">
                                         <div class="carousel-card__image"><img src="sliki/sliki-1.jpg"
-                                                alt="Соло слика 1" loading="lazy"></div>
+                                                alt="Фотосесија слика 1" loading="lazy"></div>
                                         <div class="carousel-card__overlay">
                                             <div class="carousel-card__top"><span
-                                                    class="carousel-card__label">Соло</span><span
+                                                    class="carousel-card__label">Фотосесија</span><span
                                                     class="carousel-card__tag">01</span></div>
                                             <div class="carousel-card__bottom"><span
                                                     class="carousel-card__title">Фотографија</span><svg
@@ -946,10 +950,10 @@
                                 <li class="splide__slide">
                                     <div class="carousel-card" tabindex="0">
                                         <div class="carousel-card__image"><img src="sliki/sliki-2.jpg"
-                                                alt="Соло слика 2" loading="lazy"></div>
+                                                alt="Фотосесија слика 2" loading="lazy"></div>
                                         <div class="carousel-card__overlay">
                                             <div class="carousel-card__top"><span
-                                                    class="carousel-card__label">Соло</span><span
+                                                    class="carousel-card__label">Фотосесија</span><span
                                                     class="carousel-card__tag">02</span></div>
                                             <div class="carousel-card__bottom"><span
                                                     class="carousel-card__title">Фотографија</span><svg
@@ -965,10 +969,10 @@
                                 <li class="splide__slide">
                                     <div class="carousel-card" tabindex="0">
                                         <div class="carousel-card__image"><img src="sliki/sliki-3.jpg"
-                                                alt="Соло слика 3" loading="lazy"></div>
+                                                alt="Фотосесија слика 3" loading="lazy"></div>
                                         <div class="carousel-card__overlay">
                                             <div class="carousel-card__top"><span
-                                                    class="carousel-card__label">Соло</span><span
+                                                    class="carousel-card__label">Фотосесија</span><span
                                                     class="carousel-card__tag">03</span></div>
                                             <div class="carousel-card__bottom"><span
                                                     class="carousel-card__title">Фотографија</span><svg
@@ -984,10 +988,10 @@
                                 <li class="splide__slide">
                                     <div class="carousel-card" tabindex="0">
                                         <div class="carousel-card__image"><img src="sliki/sliki-4.jpg"
-                                                alt="Соло слика 4" loading="lazy"></div>
+                                                alt="Фотосесија слика 4" loading="lazy"></div>
                                         <div class="carousel-card__overlay">
                                             <div class="carousel-card__top"><span
-                                                    class="carousel-card__label">Соло</span><span
+                                                    class="carousel-card__label">Фотосесија</span><span
                                                     class="carousel-card__tag">04</span></div>
                                             <div class="carousel-card__bottom"><span
                                                     class="carousel-card__title">Фотографија</span><svg
@@ -1003,10 +1007,10 @@
                                 <li class="splide__slide">
                                     <div class="carousel-card" tabindex="0">
                                         <div class="carousel-card__image"><img src="sliki/sliki-5.jpg"
-                                                alt="Соло слика 5" loading="lazy"></div>
+                                                alt="Фотосесија слика 5" loading="lazy"></div>
                                         <div class="carousel-card__overlay">
                                             <div class="carousel-card__top"><span
-                                                    class="carousel-card__label">Соло</span><span
+                                                    class="carousel-card__label">Фотосесија</span><span
                                                     class="carousel-card__tag">05</span></div>
                                             <div class="carousel-card__bottom"><span
                                                     class="carousel-card__title">Фотографија</span><svg
@@ -1022,10 +1026,10 @@
                                 <li class="splide__slide">
                                     <div class="carousel-card" tabindex="0">
                                         <div class="carousel-card__image"><img src="sliki/sliki-6.jpg"
-                                                alt="Соло слика 6" loading="lazy"></div>
+                                                alt="Фотосесија слика 6" loading="lazy"></div>
                                         <div class="carousel-card__overlay">
                                             <div class="carousel-card__top"><span
-                                                    class="carousel-card__label">Соло</span><span
+                                                    class="carousel-card__label">Фотосесија</span><span
                                                     class="carousel-card__tag">06</span></div>
                                             <div class="carousel-card__bottom"><span
                                                     class="carousel-card__title">Фотографија</span><svg
@@ -1041,10 +1045,10 @@
                                 <li class="splide__slide">
                                     <div class="carousel-card" tabindex="0">
                                         <div class="carousel-card__image"><img src="sliki/sliki-7.jpg"
-                                                alt="Соло слика 7" loading="lazy"></div>
+                                                alt="Фотосесија слика 7" loading="lazy"></div>
                                         <div class="carousel-card__overlay">
                                             <div class="carousel-card__top"><span
-                                                    class="carousel-card__label">Соло</span><span
+                                                    class="carousel-card__label">Фотосесија</span><span
                                                     class="carousel-card__tag">07</span></div>
                                             <div class="carousel-card__bottom"><span
                                                     class="carousel-card__title">Фотографија</span><svg
@@ -1544,9 +1548,304 @@
                 </div>
             </div>
         </section>
+        <!-- ===== CATEGORY: КРШТЕВКИ ===== -->
+        <section id="krstevki" class="sticky-section py-20 md:py-28 px-4 md:px-8" style="z-index: 7;">
+            <div class="fade-section max-w-6xl mx-auto w-full">
+                <h3 class="font-heading text-center mb-4"
+                    style="font-size: clamp(32px, 5vw, 56px); letter-spacing: 4px;">
+                    Крштевки
+                </h3>
+                <div class="section-accent"></div>
+                <div class="carousel-container">
+                    <div id="splide-krstevki" class="splide" aria-label="Крштевки галерија">
+                        <div class="splide__track">
+                            <ul class="splide__list">
+                                <li class="splide__slide">
+                                    <div class="carousel-card" tabindex="0">
+                                        <div class="carousel-card__image"><img src="sliki/sliki-1.jpg"
+                                                alt="Крштевки фотографија 1" loading="lazy"></div>
+                                        <div class="carousel-card__overlay">
+                                            <div class="carousel-card__top"><span
+                                                    class="carousel-card__label">Крштевки</span><span
+                                                    class="carousel-card__tag">01</span></div>
+                                            <div class="carousel-card__bottom"><span
+                                                    class="carousel-card__title">Фотографија</span><svg
+                                                    class="carousel-card__arrow" viewBox="0 0 24 24" fill="none"
+                                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                    stroke-linejoin="round">
+                                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                                    <polyline points="12 5 19 12 12 19"></polyline>
+                                                </svg></div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="splide__slide">
+                                    <div class="carousel-card" tabindex="0">
+                                        <div class="carousel-card__image"><img src="sliki/sliki-2.jpg"
+                                                alt="Крштевки фотографија 2" loading="lazy"></div>
+                                        <div class="carousel-card__overlay">
+                                            <div class="carousel-card__top"><span
+                                                    class="carousel-card__label">Крштевки</span><span
+                                                    class="carousel-card__tag">02</span></div>
+                                            <div class="carousel-card__bottom"><span
+                                                    class="carousel-card__title">Фотографија</span><svg
+                                                    class="carousel-card__arrow" viewBox="0 0 24 24" fill="none"
+                                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                    stroke-linejoin="round">
+                                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                                    <polyline points="12 5 19 12 12 19"></polyline>
+                                                </svg></div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="splide__slide">
+                                    <div class="carousel-card" tabindex="0">
+                                        <div class="carousel-card__image"><img src="sliki/sliki-3.jpg"
+                                                alt="Крштевки фотографија 3" loading="lazy"></div>
+                                        <div class="carousel-card__overlay">
+                                            <div class="carousel-card__top"><span
+                                                    class="carousel-card__label">Крштевки</span><span
+                                                    class="carousel-card__tag">03</span></div>
+                                            <div class="carousel-card__bottom"><span
+                                                    class="carousel-card__title">Фотографија</span><svg
+                                                    class="carousel-card__arrow" viewBox="0 0 24 24" fill="none"
+                                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                    stroke-linejoin="round">
+                                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                                    <polyline points="12 5 19 12 12 19"></polyline>
+                                                </svg></div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="splide__slide">
+                                    <div class="carousel-card" tabindex="0">
+                                        <div class="carousel-card__image"><img src="sliki/sliki-4.jpg"
+                                                alt="Крштевки фотографија 4" loading="lazy"></div>
+                                        <div class="carousel-card__overlay">
+                                            <div class="carousel-card__top"><span
+                                                    class="carousel-card__label">Крштевки</span><span
+                                                    class="carousel-card__tag">04</span></div>
+                                            <div class="carousel-card__bottom"><span
+                                                    class="carousel-card__title">Фотографија</span><svg
+                                                    class="carousel-card__arrow" viewBox="0 0 24 24" fill="none"
+                                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                    stroke-linejoin="round">
+                                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                                    <polyline points="12 5 19 12 12 19"></polyline>
+                                                </svg></div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="splide__slide">
+                                    <div class="carousel-card" tabindex="0">
+                                        <div class="carousel-card__image"><img src="sliki/sliki-5.jpg"
+                                                alt="Крштевки фотографија 5" loading="lazy"></div>
+                                        <div class="carousel-card__overlay">
+                                            <div class="carousel-card__top"><span
+                                                    class="carousel-card__label">Крштевки</span><span
+                                                    class="carousel-card__tag">05</span></div>
+                                            <div class="carousel-card__bottom"><span
+                                                    class="carousel-card__title">Фотографија</span><svg
+                                                    class="carousel-card__arrow" viewBox="0 0 24 24" fill="none"
+                                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                    stroke-linejoin="round">
+                                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                                    <polyline points="12 5 19 12 12 19"></polyline>
+                                                </svg></div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="splide__slide">
+                                    <div class="carousel-card" tabindex="0">
+                                        <div class="carousel-card__image"><img src="sliki/sliki-6.jpg"
+                                                alt="Крштевки фотографија 6" loading="lazy"></div>
+                                        <div class="carousel-card__overlay">
+                                            <div class="carousel-card__top"><span
+                                                    class="carousel-card__label">Крштевки</span><span
+                                                    class="carousel-card__tag">06</span></div>
+                                            <div class="carousel-card__bottom"><span
+                                                    class="carousel-card__title">Фотографија</span><svg
+                                                    class="carousel-card__arrow" viewBox="0 0 24 24" fill="none"
+                                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                    stroke-linejoin="round">
+                                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                                    <polyline points="12 5 19 12 12 19"></polyline>
+                                                </svg></div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="splide__slide">
+                                    <div class="carousel-card" tabindex="0">
+                                        <div class="carousel-card__image"><img src="sliki/sliki-7.jpg"
+                                                alt="Крштевки фотографија 7" loading="lazy"></div>
+                                        <div class="carousel-card__overlay">
+                                            <div class="carousel-card__top"><span
+                                                    class="carousel-card__label">Крштевки</span><span
+                                                    class="carousel-card__tag">07</span></div>
+                                            <div class="carousel-card__bottom"><span
+                                                    class="carousel-card__title">Фотографија</span><svg
+                                                    class="carousel-card__arrow" viewBox="0 0 24 24" fill="none"
+                                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                    stroke-linejoin="round">
+                                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                                    <polyline points="12 5 19 12 12 19"></polyline>
+                                                </svg></div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- ===== CATEGORY: НОЌЕН КЛУБ ===== -->
+        <section id="nocen-klub" class="sticky-section py-20 md:py-28 px-4 md:px-8" style="z-index: 8;">
+            <div class="fade-section max-w-6xl mx-auto w-full">
+                <h3 class="font-heading text-center mb-4"
+                    style="font-size: clamp(32px, 5vw, 56px); letter-spacing: 4px;">
+                    Ноќен Клуб
+                </h3>
+                <div class="section-accent"></div>
+                <div class="carousel-container">
+                    <div id="splide-nocen-klub" class="splide" aria-label="Ноќен Клуб галерија">
+                        <div class="splide__track">
+                            <ul class="splide__list" id="nocen-klub-slides">
+                                <li class="splide__slide">
+                                    <div class="carousel-card" tabindex="0">
+                                        <div class="carousel-card__image" style="background:#1a1a1a;"></div>
+                                        <div class="carousel-card__overlay">
+                                            <div class="carousel-card__top"><span
+                                                    class="carousel-card__label">Ноќен Клуб</span><span
+                                                    class="carousel-card__tag">01</span></div>
+                                            <div class="carousel-card__bottom"><span
+                                                    class="carousel-card__title">Фотографија</span><svg
+                                                    class="carousel-card__arrow" viewBox="0 0 24 24" fill="none"
+                                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                    stroke-linejoin="round">
+                                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                                    <polyline points="12 5 19 12 12 19"></polyline>
+                                                </svg></div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="splide__slide">
+                                    <div class="carousel-card" tabindex="0">
+                                        <div class="carousel-card__image" style="background:#1a1a1a;"></div>
+                                        <div class="carousel-card__overlay">
+                                            <div class="carousel-card__top"><span
+                                                    class="carousel-card__label">Ноќен Клуб</span><span
+                                                    class="carousel-card__tag">02</span></div>
+                                            <div class="carousel-card__bottom"><span
+                                                    class="carousel-card__title">Фотографија</span><svg
+                                                    class="carousel-card__arrow" viewBox="0 0 24 24" fill="none"
+                                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                    stroke-linejoin="round">
+                                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                                    <polyline points="12 5 19 12 12 19"></polyline>
+                                                </svg></div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="splide__slide">
+                                    <div class="carousel-card" tabindex="0">
+                                        <div class="carousel-card__image" style="background:#1a1a1a;"></div>
+                                        <div class="carousel-card__overlay">
+                                            <div class="carousel-card__top"><span
+                                                    class="carousel-card__label">Ноќен Клуб</span><span
+                                                    class="carousel-card__tag">03</span></div>
+                                            <div class="carousel-card__bottom"><span
+                                                    class="carousel-card__title">Фотографија</span><svg
+                                                    class="carousel-card__arrow" viewBox="0 0 24 24" fill="none"
+                                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                    stroke-linejoin="round">
+                                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                                    <polyline points="12 5 19 12 12 19"></polyline>
+                                                </svg></div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="splide__slide">
+                                    <div class="carousel-card" tabindex="0">
+                                        <div class="carousel-card__image" style="background:#1a1a1a;"></div>
+                                        <div class="carousel-card__overlay">
+                                            <div class="carousel-card__top"><span
+                                                    class="carousel-card__label">Ноќен Клуб</span><span
+                                                    class="carousel-card__tag">04</span></div>
+                                            <div class="carousel-card__bottom"><span
+                                                    class="carousel-card__title">Фотографија</span><svg
+                                                    class="carousel-card__arrow" viewBox="0 0 24 24" fill="none"
+                                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                    stroke-linejoin="round">
+                                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                                    <polyline points="12 5 19 12 12 19"></polyline>
+                                                </svg></div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="splide__slide">
+                                    <div class="carousel-card" tabindex="0">
+                                        <div class="carousel-card__image" style="background:#1a1a1a;"></div>
+                                        <div class="carousel-card__overlay">
+                                            <div class="carousel-card__top"><span
+                                                    class="carousel-card__label">Ноќен Клуб</span><span
+                                                    class="carousel-card__tag">05</span></div>
+                                            <div class="carousel-card__bottom"><span
+                                                    class="carousel-card__title">Фотографија</span><svg
+                                                    class="carousel-card__arrow" viewBox="0 0 24 24" fill="none"
+                                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                    stroke-linejoin="round">
+                                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                                    <polyline points="12 5 19 12 12 19"></polyline>
+                                                </svg></div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="splide__slide">
+                                    <div class="carousel-card" tabindex="0">
+                                        <div class="carousel-card__image" style="background:#1a1a1a;"></div>
+                                        <div class="carousel-card__overlay">
+                                            <div class="carousel-card__top"><span
+                                                    class="carousel-card__label">Ноќен Клуб</span><span
+                                                    class="carousel-card__tag">06</span></div>
+                                            <div class="carousel-card__bottom"><span
+                                                    class="carousel-card__title">Фотографија</span><svg
+                                                    class="carousel-card__arrow" viewBox="0 0 24 24" fill="none"
+                                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                    stroke-linejoin="round">
+                                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                                    <polyline points="12 5 19 12 12 19"></polyline>
+                                                </svg></div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="splide__slide">
+                                    <div class="carousel-card" tabindex="0">
+                                        <div class="carousel-card__image" style="background:#1a1a1a;"></div>
+                                        <div class="carousel-card__overlay">
+                                            <div class="carousel-card__top"><span
+                                                    class="carousel-card__label">Ноќен Клуб</span><span
+                                                    class="carousel-card__tag">07</span></div>
+                                            <div class="carousel-card__bottom"><span
+                                                    class="carousel-card__title">Фотографија</span><svg
+                                                    class="carousel-card__arrow" viewBox="0 0 24 24" fill="none"
+                                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                    stroke-linejoin="round">
+                                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                                    <polyline points="12 5 19 12 12 19"></polyline>
+                                                </svg></div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
         <!-- ===== FINAL CTA ===== -->
         <section id="cta" class="py-24 md:py-32 px-4 text-center"
-            style="z-index: 7; position: relative; background: #000; min-height: 100vh; min-height: 100dvh; display: flex; flex-direction: column; justify-content: center; overflow: hidden;">
+            style="z-index: 9; position: relative; background: #000; min-height: 100vh; min-height: 100dvh; display: flex; flex-direction: column; justify-content: center; overflow: hidden;">
             <video class="cta-bg-video" autoplay loop muted playsinline>
                 <source src="extend.mp4" type="video/mp4">
             </video>
@@ -1682,15 +1981,65 @@
                 }
             };
 
-            ['splide-sport', 'splide-events', 'splide-solo', 'splide-promo'].forEach(function (id) {
+            window.__splideInstances = {};
+            ['splide-sport', 'splide-events', 'splide-solo', 'splide-promo', 'splide-krstevki', 'splide-nocen-klub'].forEach(function (id) {
                 var el = document.getElementById(id);
                 if (el) {
                     var instance = new Splide('#' + id, splideOptions).mount();
+                    window.__splideInstances[id] = instance;
                     if (id === 'splide-sport') {
                         window.__sportSplide = instance;
                     }
                 }
             });
+
+            var categoryMap = {
+                'splide-solo': 'solo',
+                'splide-events': 'nastani',
+                'splide-promo': 'promocii',
+                'splide-sport': 'sport',
+                'splide-krstevki': 'krstevki',
+                'splide-nocen-klub': 'nocen-klub'
+            };
+
+            if (typeof supabaseClient !== 'undefined') {
+                Object.keys(categoryMap).forEach(function (splideId) {
+                    var category = categoryMap[splideId];
+                    var instance = window.__splideInstances[splideId];
+                    if (!instance) return;
+
+                    supabaseClient
+                        .from('galleries')
+                        .select('*')
+                        .eq('category', category)
+                        .order('created_at', { ascending: false })
+                        .limit(7)
+                        .then(function (result) {
+                            if (result.error || !result.data || result.data.length === 0) return;
+
+                            var list = instance.root.querySelector('.splide__list');
+                            list.innerHTML = '';
+
+                            result.data.forEach(function (row, i) {
+                                var num = String(i + 1).padStart(2, '0');
+                                var label = list.closest('.sticky-section').querySelector('h3').textContent.trim();
+                                var li = document.createElement('li');
+                                li.className = 'splide__slide';
+                                li.innerHTML =
+                                    '<div class="carousel-card" tabindex="0">' +
+                                        '<div class="carousel-card__image"><img src="' + row.url + '" alt="' + label + ' ' + num + '" loading="lazy"></div>' +
+                                        '<div class="carousel-card__overlay">' +
+                                            '<div class="carousel-card__top"><span class="carousel-card__label">' + label + '</span><span class="carousel-card__tag">' + num + '</span></div>' +
+                                            '<div class="carousel-card__bottom"><span class="carousel-card__title">Фотографија</span><svg class="carousel-card__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></div>' +
+                                        '</div>' +
+                                    '</div>';
+                                list.appendChild(li);
+                            });
+
+                            instance.refresh();
+                        });
+                });
+            }
         });
     </script>
 

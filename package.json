@@ -11,6 +11,8 @@
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
-    "puppeteer": "^24.40.0"
+    "@supabase/supabase-js": "^2.108.1",
+    "puppeteer": "^24.40.0",
+    "sharp": "^0.35.1"
   }
 }
