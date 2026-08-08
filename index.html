@@ -713,6 +713,131 @@
             background: #FF7800;
         }
 
+        /* ===== SHOWREEL POSTER ===== */
+        .showreel-poster {
+            position: relative;
+            display: block;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            border-radius: 1rem;
+            overflow: hidden;
+            border: none;
+            padding: 0;
+            cursor: pointer;
+            background: #0a0a0a;
+        }
+
+        .showreel-poster img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .showreel-poster:hover img { transform: scale(1.04); }
+
+        .showreel-poster__scrim {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0.6) 100%);
+        }
+
+        .showreel-poster__play {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 84px;
+            height: 84px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .showreel-poster__play svg {
+            width: 30px;
+            height: 30px;
+            color: #fff;
+            margin-left: 4px;
+        }
+
+        .showreel-poster:hover .showreel-poster__play,
+        .showreel-poster:focus-visible .showreel-poster__play {
+            background: #FF7800;
+            border-color: #FF7800;
+            transform: translate(-50%, -50%) scale(1.08);
+        }
+
+        .showreel-poster__label {
+            position: absolute;
+            left: 24px;
+            bottom: 20px;
+            font-family: 'Lora', serif;
+            font-size: 13px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #fff;
+            opacity: 0.75;
+        }
+
+        .showreel-poster:focus-visible {
+            outline: 2px solid #FF7800;
+            outline-offset: 4px;
+        }
+
+        @media (max-width: 640px) {
+            .showreel-poster__play { width: 64px; height: 64px; }
+            .showreel-poster__play svg { width: 24px; height: 24px; }
+            .showreel-poster__label { left: 16px; bottom: 14px; font-size: 11px; }
+        }
+
+        /* ===== SHOWREEL MODAL ===== */
+        #showreel-modal {
+            position: fixed; inset: 0; z-index: 100000;
+            background: rgba(0, 0, 0, 0.96);
+            display: flex; align-items: center; justify-content: center;
+            padding: 24px;
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.25s ease;
+        }
+        #showreel-modal.sr-open { opacity: 1; pointer-events: auto; }
+        #showreel-modal .sr-frame {
+            position: relative;
+            width: 100%;
+            max-width: 1100px;
+            aspect-ratio: 16 / 9;
+            background: #000;
+            border-radius: 0.5rem;
+            overflow: hidden;
+        }
+        #showreel-modal .sr-frame iframe,
+        #showreel-modal .sr-frame video {
+            position: absolute; inset: 0;
+            width: 100%; height: 100%;
+            border: none;
+        }
+        #sr-close {
+            position: absolute; top: 12px; right: 12px;
+            background: rgba(255, 255, 255, 0.08); border: none; color: #fff; cursor: pointer;
+            width: 44px; height: 44px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 18px; opacity: 0.7; transition: opacity 0.2s, background 0.2s;
+            z-index: 1;
+        }
+        #sr-close:hover { opacity: 1; background: rgba(255, 120, 0, 0.25); color: #FF7800; }
+        #sr-close:focus-visible {
+            outline: 2px solid #FF7800;
+            outline-offset: 2px;
+        }
+
         /* LIGHTBOX */
         #lightbox {
             position: fixed; inset: 0; z-index: 100000;
@@ -887,6 +1012,27 @@
                     <img src="gimbal.png" alt="Опрема"
                         class="w-full max-w-md object-contain drop-shadow-xl hover:scale-105 transition-transform duration-500">
                 </div>
+            </div>
+        </section>
+
+        <!-- ===== SHOWREEL ===== -->
+        <section id="showreel" class="py-20 md:py-28 px-4 md:px-8" style="position: relative; z-index: 2;">
+            <div class="fade-section max-w-6xl mx-auto w-full">
+                <h3 class="font-heading text-center mb-4"
+                    style="font-size: clamp(32px, 5vw, 56px); letter-spacing: 4px;">
+                    Направи Ги Мемориите Живи...
+                </h3>
+                <div class="section-accent"></div>
+                <button type="button" class="showreel-poster mt-2" id="showreel-open" aria-haspopup="dialog">
+                    <img src="https://img.youtube.com/vi/yHOf91jjpv0/sddefault.jpg" alt="" loading="lazy">
+                    <span class="showreel-poster__scrim"></span>
+                    <span class="showreel-poster__play" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M8 5v14l11-7z" />
+                        </svg>
+                    </span>
+                    <span class="showreel-poster__label">Пушти го видеото</span>
+                </button>
             </div>
         </section>
 
@@ -2190,26 +2336,31 @@
             // Use event delegation on the section so clicks on cloned slides also work.
             document.addEventListener('DOMContentLoaded', function () {
                 document.querySelectorAll('.sticky-section').forEach(function (section) {
-                    // Build items from original (non-clone) slides only
-                    var items = [];
-                    section.querySelectorAll('.splide__slide:not(.splide__slide--clone) .carousel-card').forEach(function (card) {
-                        var img = card.querySelector('img');
-                        var label = card.querySelector('.carousel-card__label');
-                        var tag = card.querySelector('.carousel-card__tag');
-                        var title = card.querySelector('.carousel-card__title');
-                        items.push({
-                            src: img ? img.getAttribute('src') : '',
-                            label: label ? label.textContent : '',
-                            num: tag ? tag.textContent : '',
-                            title: title ? title.textContent : ''
+                    // Build items from original (non-clone) slides at click time so the
+                    // list always reflects whatever Supabase has loaded into the carousel.
+                    function buildItems() {
+                        var items = [];
+                        section.querySelectorAll('.splide__slide:not(.splide__slide--clone) .carousel-card').forEach(function (card) {
+                            var img = card.querySelector('img');
+                            var label = card.querySelector('.carousel-card__label');
+                            var tag = card.querySelector('.carousel-card__tag');
+                            var title = card.querySelector('.carousel-card__title');
+                            items.push({
+                                src: img ? img.getAttribute('src') : '',
+                                label: label ? label.textContent : '',
+                                num: tag ? tag.textContent : '',
+                                title: title ? title.textContent : ''
+                            });
                         });
-                    });
+                        return items;
+                    }
 
                     // Event delegation — works on clones too
                     section.addEventListener('click', function (e) {
                         var card = e.target.closest('.carousel-card');
                         if (!card) return;
-                        // Find which item this corresponds to by matching image src
+                        // Rebuild from the current DOM, then match by image src
+                        var items = buildItems();
                         var img = card.querySelector('img');
                         var src = img ? img.getAttribute('src') : '';
                         var idx = items.findIndex(function (it) { return it.src === src; });
@@ -2223,6 +2374,48 @@
                         c.style.cursor = 'pointer';
                     });
                 });
+            });
+        })();
+    </script>
+
+    <!-- ===== SHOWREEL MODAL ===== -->
+    <div id="showreel-modal" role="dialog" aria-modal="true" aria-label="Видео">
+        <button id="sr-close" aria-label="Затвори">&#x2715;</button>
+        <div class="sr-frame" id="sr-frame"></div>
+    </div>
+
+    <script>
+        (function () {
+            var srModal = document.getElementById('showreel-modal');
+            var srFrame = document.getElementById('sr-frame');
+            var srClose = document.getElementById('sr-close');
+            var srOpenBtn = document.getElementById('showreel-open');
+
+            // https://www.youtube.com/watch?v=yHOf91jjpv0
+            var YOUTUBE_ID = 'yHOf91jjpv0';
+
+            function openShowreel() {
+                srFrame.innerHTML = '<iframe src="https://www.youtube-nocookie.com/embed/' + YOUTUBE_ID +
+                    '?autoplay=1&rel=0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+                srModal.classList.add('sr-open');
+                document.body.style.overflow = 'hidden';
+                srClose.focus();
+            }
+
+            function closeShowreel() {
+                srModal.classList.remove('sr-open');
+                srFrame.innerHTML = '';
+                document.body.style.overflow = '';
+                srOpenBtn.focus();
+            }
+
+            srOpenBtn.addEventListener('click', openShowreel);
+            srClose.addEventListener('click', closeShowreel);
+            srModal.addEventListener('click', function (e) {
+                if (e.target === srModal) closeShowreel();
+            });
+            document.addEventListener('keydown', function (e) {
+                if (srModal.classList.contains('sr-open') && e.key === 'Escape') closeShowreel();
             });
         })();
     </script>
