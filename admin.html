@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Администрација — Smilevski Production</title>
+    <meta name="robots" content="noindex, nofollow">
     <link rel="icon" type="image/png" href="logo.png">
     <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&family=Unbounded:wght@400;700;800;900&display=swap" rel="stylesheet">
     <style>
@@ -41,6 +42,21 @@
         #dashboard-section { text-align: center; }
         #logout-btn { background: #333; margin-top: 20px; }
         #logout-btn:hover { background: #444; }
+
+        #photo-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); gap: 10px;
+            margin-top: 16px; max-height: 340px; overflow-y: auto; text-align: left;
+        }
+        .photo-item { position: relative; border-radius: 4px; overflow: hidden; aspect-ratio: 1; background: #222; }
+        .photo-item img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .photo-delete {
+            position: absolute; top: 4px; right: 4px; width: 24px; height: 24px; padding: 0; margin: 0;
+            background: rgba(0,0,0,0.7); border: 1px solid rgba(255,255,255,0.3); border-radius: 4px;
+            color: #ff4444; font-family: 'Unbounded', sans-serif; font-size: 14px; line-height: 1;
+            display: flex; align-items: center; justify-content: center; cursor: pointer;
+        }
+        .photo-delete:hover { background: #ff4444; color: #fff; }
+        .photo-grid-empty { grid-column: 1 / -1; opacity: 0.6; font-size: 13px; padding: 20px 0; }
     </style>
 
     <!-- Supabase SDK -->
@@ -85,6 +101,11 @@
             <button id="upload-btn">Прикачи</button>
             <p id="upload-msg"></p>
 
+            <div class="form-group">
+                <label>Фотографии во галеријата</label>
+                <div id="photo-grid"></div>
+            </div>
+
             <button id="logout-btn">Одјави се</button>
         </div>
     </div>
@@ -97,6 +118,8 @@
         const dashboardSection = document.getElementById('dashboard-section');
         const errorMsg = document.getElementById('error-msg');
         const uploadMsg = document.getElementById('upload-msg');
+        const gallerySelect = document.getElementById('gallery-select');
+        const photoGrid = document.getElementById('photo-grid');
 
         // Check active session on load
         async function checkSession() {
@@ -104,6 +127,7 @@
             if (session) {
                 loginSection.classList.add('hidden');
                 dashboardSection.classList.remove('hidden');
+                loadPhotos();
             } else {
                 loginSection.classList.remove('hidden');
                 dashboardSection.classList.add('hidden');
@@ -116,11 +140,95 @@
             if (session) {
                 loginSection.classList.add('hidden');
                 dashboardSection.classList.remove('hidden');
+                loadPhotos();
             } else {
                 loginSection.classList.remove('hidden');
                 dashboardSection.classList.add('hidden');
             }
         });
+
+        gallerySelect.addEventListener('change', loadPhotos);
+
+        // Derive the storage object path from a public URL
+        function pathFromPublicUrl(url) {
+            const marker = '/storage/v1/object/public/galleries/';
+            const idx = url.indexOf(marker);
+            return idx === -1 ? null : url.slice(idx + marker.length);
+        }
+
+        async function loadPhotos() {
+            const gallery = gallerySelect.value;
+            photoGrid.innerHTML = '<p class="photo-grid-empty">Се вчитува...</p>';
+
+            const { data, error } = await supabaseClient
+                .from('galleries')
+                .select('*')
+                .eq('category', gallery)
+                .order('id', { ascending: false });
+
+            if (error) {
+                photoGrid.innerHTML = `<p class="photo-grid-empty">Грешка: ${error.message}</p>`;
+                return;
+            }
+
+            if (!data || data.length === 0) {
+                photoGrid.innerHTML = '<p class="photo-grid-empty">Нема фотографии во оваа галерија.</p>';
+                return;
+            }
+
+            photoGrid.innerHTML = '';
+            data.forEach(row => {
+                const item = document.createElement('div');
+                item.className = 'photo-item';
+
+                const img = document.createElement('img');
+                img.src = row.url;
+                img.loading = 'lazy';
+                item.appendChild(img);
+
+                const delBtn = document.createElement('button');
+                delBtn.className = 'photo-delete';
+                delBtn.innerText = '×';
+                delBtn.title = 'Избриши';
+                delBtn.addEventListener('click', () => deletePhoto(row));
+                item.appendChild(delBtn);
+
+                photoGrid.appendChild(item);
+            });
+        }
+
+        async function deletePhoto(row) {
+            if (!confirm('Дали сте сигурни дека сакате да ја избришете оваа фотографија?')) return;
+
+            uploadMsg.style.display = 'none';
+
+            try {
+                const path = pathFromPublicUrl(row.url);
+                if (path) {
+                    const { error: storageError } = await supabaseClient.storage
+                        .from('galleries')
+                        .remove([path]);
+                    if (storageError) {
+                        throw new Error("Storage RLS Error: " + storageError.message);
+                    }
+                }
+
+                const { error: dbError } = await supabaseClient
+                    .from('galleries')
+                    .delete()
+                    .eq('id', row.id);
+
+                if (dbError) {
+                    throw new Error("Database RLS Error: " + dbError.message);
+                }
+
+                loadPhotos();
+            } catch (error) {
+                uploadMsg.innerText = "Грешка: " + error.message;
+                uploadMsg.style.color = "#ff4444";
+                uploadMsg.style.display = 'block';
+            }
+        }
 
         // Login Logic
         document.getElementById('login-btn').addEventListener('click', async () => {
@@ -218,6 +326,7 @@
                 uploadMsg.style.color = "#44ff44";
                 uploadMsg.style.display = 'block';
                 document.getElementById('image-file').value = ''; // Reset file input
+                loadPhotos();
             } catch (error) {
                 uploadMsg.innerText = "Грешка: " + error.message;
                 uploadMsg.style.color = "#ff4444";
